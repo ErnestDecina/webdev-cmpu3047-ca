@@ -14,7 +14,7 @@ export function createExpressServer() {
 
 
     // Serve the api content
-
+    express_app.use(`/api/v1`, express_router);
 
     // Serve the website
     express_app.use('/', express.static('../frontend/bootstrap/'));

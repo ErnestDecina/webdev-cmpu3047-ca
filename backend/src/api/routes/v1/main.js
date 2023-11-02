@@ -1,7 +1,8 @@
 import { Router } from 'express';
+import ExampleController from '../../controllers/ExampleController.js';
 
-const main_router = Router();
+export const main_router = Router();
 
 main_router
     .route('/test')
-    .post((req, res) => {res.send('test')});
+    .get(ExampleController.example);
