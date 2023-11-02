@@ -18,6 +18,9 @@ export function createExpressServer() {
 
     // Serve the website
     express_app.use('/', express.static('../frontend/bootstrap/'));
+    express_app.use('/account', express.static('../frontend/bootstrap/account.html'));
+    express_app.use('/exercise', express.static('../frontend/bootstrap/exercise.html'));
+    express_app.use('/workout', express.static('../frontend/bootstrap/workout.html'));
 
     return express_app;
 }
