@@ -22,5 +22,19 @@ window.addEventListener('DOMContentLoaded', event => {
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
         });
     }
-
 });
+
+
+
+async function getapi() {
+
+    let message = await fetch("http://localhost:8000/api/v1/test");
+
+    var data = await message.json();
+
+    console.log(data);
+    // document.getElementById("testImage").src = data.image_link;
+}
+
+
+
