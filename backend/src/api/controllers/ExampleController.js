@@ -15,6 +15,18 @@ class ExampleController {
             res.status(401)
         }
     }
+
+    async exampleLogin(
+        req,
+        res
+    ) {
+        try {
+            console.log(req.body)
+            res.sendStatus(200)
+        } catch (error) {
+            res.status(401)
+        }
+    }
 }
 
 export default new ExampleController();
