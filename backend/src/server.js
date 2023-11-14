@@ -9,7 +9,8 @@ export function createExpressServer() {
     const cors_option = {
         origin: '*'
     };
-    
+
+    express_app.use(express.json());
     express_app.use(cors(cors_option));
 
 
