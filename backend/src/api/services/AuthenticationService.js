@@ -4,22 +4,27 @@
 class AuthenticationService {
     mockDB = [
         {
-            uid: 0,
+            uid: 1,
             username: "ErnestDecina",
             password: "Test"
         },
         {
-            uid: 1,
+            uid: 2,
             username: "Test1",
             password: "Test1"
         },
         {
-            uid: 2,
+            uid: 3,
             username: "Test2",
             password: "Test2"
         },
     ]
 
+    /**
+     * 
+     * @param {*} request 
+     * @returns 
+     */
     async login(
         request
     ) {
@@ -53,21 +58,53 @@ class AuthenticationService {
         } // End try catch
 
         // Set Session Data
-        request.session.uid = user_index;
+        request.session.uid = this.mockDB[user_index].uid;
         request.session.username = username;
 
         return true;
     } // End login()
 
+
+    /**
+     * 
+     * @param {*} request 
+     */
+    async logout(
+        request
+    ) { 
+        // Check if session exists
+        if(!request.session) return false;
+
+        request.session.destroy();
+        return true;
+    } // En
+
+
+    /**
+     * 
+     * @param {*} request 
+     */
     async signup(
         request
     ) {
 
     } // End signup()
 
+
+    /**
+     * 
+     * @param {*} request 
+     * @returns 
+     */
     async validateUser(
         request
     ) {
+
+        console.log(request.session.username)
+        console.log(request.session.uid)
+
+        if(!request.session.username || !request.session.uid) return false;
+
         console.log(request.session)
         return true;
     } // End valideUser

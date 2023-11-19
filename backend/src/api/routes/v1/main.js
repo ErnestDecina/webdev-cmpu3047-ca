@@ -18,7 +18,13 @@ main_router
     .get(ExampleController.exmapleSessionCheck);
 // TESTING //
 
-// Login In
+
+// Login In //
 main_router
     .route('/login')
     .post(AuthController.login);
+
+// Logout //
+main_router
+    .route('/logout')
+    .get(AuthController.logout);
