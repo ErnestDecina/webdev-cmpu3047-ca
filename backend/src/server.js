@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import session from 'express-sessions';
+import session from 'express-session';
 import { express_router } from './api/routes/v1/index.js';
 import { api_version, session_config } from './config/express.config.js';
-import { cors_options } from './config/cors.config.js';
+import { cors_options } from './config/express.config.js';
 
 export function createExpressServer() {
     const express_app = express();
