@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import session from 'express-sessions';
 import { express_router } from './api/routes/v1/index.js';
-import { api_version } from './config/express.config.js';
+import { api_version, session_config } from './config/express.config.js';
 import { cors_options } from './config/cors.config.js';
 
 export function createExpressServer() {
@@ -10,7 +12,8 @@ export function createExpressServer() {
     // Add Middleware
     express_app.use(express.json());
     express_app.use(cors(cors_options));
-
+    express_app.use(cookieParser())
+    express_app.use(session(session_config))
 
     // Serve the api content
     express_app.use(`/api/${api_version}`, express_router);
