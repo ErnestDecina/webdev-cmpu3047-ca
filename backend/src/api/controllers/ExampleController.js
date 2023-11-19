@@ -1,3 +1,4 @@
+import AuthenticationService from "../services/AuthenticationService.js";
 
 class ExampleController {
     async example(
@@ -14,7 +15,7 @@ class ExampleController {
         } catch (error) {
             res.status(401)
         }
-    }
+    } // End example()
 
     async exampleLogin(
         req,
@@ -26,7 +27,17 @@ class ExampleController {
         } catch (error) {
             res.status(401)
         }
-    }
-}
+    } // End exampleLogin()
+
+    async exmapleSessionCheck(
+        req,
+        res
+    ) {
+        if(!AuthenticationService.validateUser(req))
+            res.status(401).send({"message": "Unauthorized"})
+
+        res.status(200).send({"message": "Authorized"}) 
+    } // End exmapleSessionCheck()
+} // End class ExampleController
 
 export default new ExampleController();
