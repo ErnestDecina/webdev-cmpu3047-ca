@@ -2,20 +2,18 @@ import express from 'express';
 import cors from 'cors';
 import { express_router } from './api/routes/v1/index.js';
 import { api_version } from './config/express.config.js';
+import { cors_options } from './config/cors.config.js';
 
 export function createExpressServer() {
     const express_app = express();
-
-    const cors_option = {
-        origin: '*'
-    };
-
+    
+    // Add Middleware
     express_app.use(express.json());
-    express_app.use(cors(cors_option));
+    express_app.use(cors(cors_options));
 
 
     // Serve the api content
-    express_app.use(`/api/v1`, express_router);
+    express_app.use(`/api/${api_version}`, express_router);
 
     // Serve the website
     express_app.use('/', express.static('../frontend/bootstrap/'));
