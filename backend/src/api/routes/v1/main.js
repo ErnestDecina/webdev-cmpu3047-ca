@@ -28,3 +28,7 @@ main_router
 main_router
     .route('/logout')
     .get(AuthController.logout);
+
+main_router
+    .route('/check')
+    .get(AuthController.check);
