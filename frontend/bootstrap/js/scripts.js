@@ -75,10 +75,20 @@ async function formValues() {
     
     data = await response.json()
     console.log(data)
+
     displayLogin(data)
 }
 
+// Changing text after loading page
+async function changeAuth() {
+    response = await fetch("http://localhost:8000/api/v1/check", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+    console.log(data)
 
-
-
+    displayLogin(data)
+}
 
