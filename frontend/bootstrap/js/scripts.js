@@ -53,5 +53,31 @@ function testFunction() {
     }
 }
 
+async function formValues() {
+    email = document.getElementById("email").value;
+    password = document.getElementById("password").value;
+
+    accountDetails = {
+        username : email,
+        password : password
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/login", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(accountDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+    
+    data = await response.json()
+    console.log(data)
+
+
+}
+
+
+
 
 
