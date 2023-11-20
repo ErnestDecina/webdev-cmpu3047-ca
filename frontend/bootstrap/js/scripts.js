@@ -37,22 +37,24 @@ async function getapi() {
 }
 
 
+// Changing account page based on session
+function displayLogin(data) {
 
-function testFunction() {
+    var account = document.getElementById('accountPage');
+    var login = document.getElementById('loginPage');
 
-    var x = document.getElementById('accountPage');
-    var y = document.getElementById('loginPage');
-
-    if (x.style.display === "none") {
-        x.style.display = "block";
-        y.style.display = "none";
+    if (data.auth == true) {
+        account.style.display = "block";
+        login.style.display = "none";
     }
     else {
-        x.style.display = "none";
-        y.style.display = "block";
+        account.style.display = "none";
+        login.style.display = "block";
     }
+
 }
 
+// Getting form values 
 async function formValues() {
     email = document.getElementById("email").value;
     password = document.getElementById("password").value;
@@ -73,8 +75,7 @@ async function formValues() {
     
     data = await response.json()
     console.log(data)
-
-
+    displayLogin(data)
 }
 
 
