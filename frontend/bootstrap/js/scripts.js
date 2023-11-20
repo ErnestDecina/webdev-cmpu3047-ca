@@ -22,5 +22,63 @@ window.addEventListener('DOMContentLoaded', event => {
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
         });
     }
-
 });
+
+
+
+async function getapi() {
+
+    let message = await fetch("http://localhost:8000/api/v1/test");
+
+    var data = await message.json();
+
+    console.log(data);
+    // document.getElementById("testImage").src = data.image_link;
+}
+
+
+// Changing account page based on session
+function displayLogin(data) {
+
+    var account = document.getElementById('accountPage');
+    var login = document.getElementById('loginPage');
+
+    if (data.auth == true) {
+        account.style.display = "block";
+        login.style.display = "none";
+    }
+    else {
+        account.style.display = "none";
+        login.style.display = "block";
+    }
+
+}
+
+// Getting form values 
+async function formValues() {
+    email = document.getElementById("email").value;
+    password = document.getElementById("password").value;
+
+    accountDetails = {
+        username : email,
+        password : password
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/login", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(accountDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+    
+    data = await response.json()
+    console.log(data)
+    displayLogin(data)
+}
+
+
+
+
+

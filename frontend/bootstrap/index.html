@@ -17,10 +17,10 @@
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-light">Fitness Tracker</div>
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/frontend/bootstrap/index.html">Home</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/frontend/bootstrap/exercise.html">Exercise</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/frontend/bootstrap/workout.html">Workout</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/frontend/bootstrap/account.html">Account</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/">Home</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/exercise">Exercise</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/workout">Workout</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/account">Account</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -31,9 +31,13 @@
                         <button class="btn" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>
                     </div>
                 </nav>
+                
                 <!-- Page content-->
                 <div class="container-fluid">
                     <h1 class="mt-4">Home</h1>
+                    <img src="" id="testImage">
+                    <p>Text</p>
+                    <button type="button" onclick="getapi()">Click</button>
                     <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
                     <p>
                         Make sure to keep all page content within the
