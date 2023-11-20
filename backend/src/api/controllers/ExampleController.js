@@ -9,7 +9,7 @@ class ExampleController {
             res.status(200).send(
                 {
                     message: "Hello World",
-                    image_link: "https://pbs.twimg.com/profile_images/1421947016339410949/hTpeZAbW_400x400.jpg"
+                    image_link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8okRIirv-byapDRLwZbkdWBz_f-bX1JgFQ19mQ5jH&s"
                 }
             );
         } catch (error) {
