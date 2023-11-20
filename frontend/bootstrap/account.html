@@ -11,7 +11,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
     </head>
-    <body>
+    <body onload="changeAuth()">
         <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
@@ -54,7 +54,7 @@
                                           <span class="h1 fw-bold mb-0">Logo</span>
                                         </div>
                       
-                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+                                        <h5 class="fw-normal mb-3 pb-3" id="TestText" style="letter-spacing: 1px;">Sign into your account</h5>
                       
                                         <div class="form-outline mb-4">
                                           <input type="email" id="email" class="form-control form-control-lg" />
