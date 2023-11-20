@@ -34,12 +34,12 @@ class ExampleController {
         res
     ) {
         if(! await AuthenticationService.validateUser(req)) {
-            res.status(401).send({"message": "Unauthorized"});
+            res.status(401).send({"auth": false});
             return; 
         } // End if
             
 
-        res.status(200).send({"message": "Authorized"});
+        res.status(200).send({"auth": true});
     } // End exmapleSessionCheck()
 } // End class ExampleController
 

@@ -99,10 +99,6 @@ class AuthenticationService {
     async validateUser(
         request
     ) {
-
-        console.log(request.session.username)
-        console.log(request.session.uid)
-
         if(!request.session.username || !request.session.uid) return false;
 
         console.log(request.session)
