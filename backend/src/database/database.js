@@ -11,8 +11,7 @@ export class mySQLDatabse {
     } // End createMyDatabase()
 
     async query(query) {
-        this.mysql_database_connection.query(query, (error, results) => {
-            if (error) throw error;
-        });
+        const results = await this.mysql_database_connection.promise().query(query);
+        return results;
     } // End query()
 } // End class mySQLDatabase

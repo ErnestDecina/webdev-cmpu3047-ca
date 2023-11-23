@@ -1,6 +1,7 @@
 import AuthenticationService from "../services/AuthenticationService.js";
 
 
+
 class AuthController {
 
 
@@ -14,7 +15,7 @@ class AuthController {
             // Check if login failed
             if( !await AuthenticationService.login(reuqest) ) 
                 res.status(401).send({"auth": false});
-        
+
 
             res.status(200).send({"auth": true});
         } catch (error) {
