@@ -1,25 +1,9 @@
-
+import { mysql_database } from "../../index.js";
+import bcrypt from "bcrypt";
+import { bcrypt_salt_rounds } from "../../config/express.config.js";
 
 
 class AuthenticationService {
-    mockDB = [
-        {
-            uid: 1,
-            username: "ErnestDecina",
-            password: "Test"
-        },
-        {
-            uid: 2,
-            username: "Test1",
-            password: "Test1"
-        },
-        {
-            uid: 3,
-            username: "Test2",
-            password: "Test2"
-        },
-    ]
-
     /**
      * 
      * @param {*} request 
@@ -36,30 +20,26 @@ class AuthenticationService {
             return false;
         } // End if 
 
-        // TODO: Check if username or password doesnt contain any special characters.
-        var user_index = null
-
         // Look for using in DB
-        try {
-            // Look for user using index
-            user_index = this.mockDB.map(e => e.username).indexOf(username);
+        // Look for user using index
+        const user = await mysql_database.querySearchUserId(username); 
+        
+        // No user found
+        if(user == -1) return false;
 
-            if(user_index == -1) return false;
+        // Get userdata
+        const user_data = await mysql_database.queryUserDetails(user.user_id); 
 
-            const user_data = this.mockDB[user_index];
-            console.log(user_data)
-
-            // Check if passwords match
-            if (user_data.password != password) return false;
-
-        } catch (error) {
-            console.log("Failed with error: " + error);
-            return false;
-        } // End try catch
+        // Check if passwords match
+        // Use bcrypt
+        if (!await bcrypt.compare(password, user_data.password)) return false;
 
         // Set Session Data
-        request.session.uid = this.mockDB[user_index].uid;
-        request.session.username = username;
+        console.log("Setting sessions")
+        request.session.uid = user_data.user_id;
+        request.session.username = user_data.username;
+        console.log(user_data.user_id)
+        console.log(user_data.username)
 
         return true;
     } // End login()
@@ -101,9 +81,19 @@ class AuthenticationService {
     ) {
         if(!request.session.username || !request.session.uid) return false;
 
-        console.log(request.session)
         return true;
     } // End valideUser
+    
+
+    /**
+     * 
+     * @param {*} error 
+     * @returns 
+     */
+    catchError(error) {
+        console.log(`Error: ${error}`);
+        return false;
+    }
 }
 
 export default new AuthenticationService();
