@@ -35,8 +35,11 @@ class AuthenticationService {
         if (!await bcrypt.compare(password, user_data.password)) return false;
 
         // Set Session Data
+        console.log("Setting sessions")
         request.session.uid = user_data.user_id;
         request.session.username = user_data.username;
+        console.log(user_data.user_id)
+        console.log(user_data.username)
 
         return true;
     } // End login()
@@ -76,25 +79,9 @@ class AuthenticationService {
     async validateUser(
         request
     ) {
-        const session_username = request.session.username;
-        const session_id = request.session.uid;
+        console.log(request.session);
 
-        if(!session_username || !session_password) return false;
-
-        // Check if username and id match
-        const user = await mysql_database.querySearchUserId(username); 
-
-        // No user found
-        if(user == -1) return false;
-
-        const user_id = user.user_id;
-
-        const user_data = await mysql_database.queryUserDetails(user_id); 
-
-        if(user_data.user_id != session_id) return false;
-        
-        if(user_data.username != session_username) return false;
-
+        if(!request.session.username || !request.session.uid) return false;
 
         return true;
     } // End valideUser
