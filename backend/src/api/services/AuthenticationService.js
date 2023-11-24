@@ -35,11 +35,8 @@ class AuthenticationService {
         if (!await bcrypt.compare(password, user_data.password)) return false;
 
         // Set Session Data
-        console.log("Setting sessions")
         request.session.uid = user_data.user_id;
         request.session.username = user_data.username;
-        console.log(user_data.user_id)
-        console.log(user_data.username)
 
         return true;
     } // End login()
