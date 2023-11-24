@@ -19,7 +19,7 @@ main_router
 // TESTING //
 
 
-// Login In //
+// Login //
 main_router
     .route('/login')
     .post(AuthController.login);
@@ -29,6 +29,7 @@ main_router
     .route('/logout')
     .get(AuthController.logout);
 
+// Check Session //
 main_router
     .route('/check')
     .get(AuthController.check);
