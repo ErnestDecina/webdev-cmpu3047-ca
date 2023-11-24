@@ -24,6 +24,11 @@ main_router
     .route('/login')
     .post(AuthController.login);
 
+// Signup //
+main_router
+    .route('/signup')
+    .post(AuthController.signup);
+
 // Logout //
 main_router
     .route('/logout')
@@ -33,3 +38,5 @@ main_router
 main_router
     .route('/check')
     .get(AuthController.check);
+
+

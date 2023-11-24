@@ -64,7 +64,26 @@ class AuthenticationService {
     async signup(
         request
     ) {
+        const user_username = request.body.username;
+        const user_email = request.body.email;
+        const user_password = request.body.password;
 
+        // Check if Username already Exists
+        const user_data_username = await mysql_database.querySearchUserId(user_username); 
+
+        // UserName found
+        if(user_data_username != -1) return false;
+
+        const user_data_email = await mysql_database.querySearchUserEmail(user_email);
+
+        // Email found
+        if(user_data_email != -1) return false;
+
+        // Create a new account
+        const hash_password = await bcrypt.hash(user_password, bcrypt_salt_rounds);
+        mysql_database.insertNewUser(user_username, user_email, hash_password);
+
+        return true;
     } // End signup()
 
 
