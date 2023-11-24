@@ -11,7 +11,7 @@ class AuthController {
     ) {
         try {
             const reuqest = req;
-            console.log("Called");
+            
             // Check if login failed
             if( !await AuthenticationService.login(reuqest) ) 
                 res.status(401).send({"auth": false});

@@ -29,14 +29,15 @@ export class mySQLDatabse {
     }
 
     async querySearchUserId(username) {
-        if (!username) return {};
+        if (!username) return -1;
 
         // Create query string
         const query_string = `SELECT user_id FROM user WHERE username = \'${username}\';`;
 
+
         const results = await this.mysql_database_connection.promise().query(query_string);
 
-        if(results[0][0] == undefined) return {};
+        if(results[0][0] == undefined) return -1;
 
         return results[0][0];
     }

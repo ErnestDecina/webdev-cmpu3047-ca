@@ -1,4 +1,6 @@
 import { mysql_database } from "../../index.js";
+import bcrypt from "bcrypt";
+import { bcrypt_salt_rounds } from "../../config/express.config.js";
 
 
 class AuthenticationService {
@@ -21,7 +23,7 @@ class AuthenticationService {
         // Look for using in DB
         // Look for user using index
         const user = await mysql_database.querySearchUserId(username); 
-
+        
         // No user found
         if(user == -1) return false;
 
@@ -29,7 +31,8 @@ class AuthenticationService {
         const user_data = await mysql_database.queryUserDetails(user.user_id); 
 
         // Check if passwords match
-        if (user_data.password != password) return false;
+        // Use bcrypt
+        if (!await bcrypt.compare(password, user_data.password)) return false;
 
         // Set Session Data
         request.session.uid = user_data.user_id;
@@ -73,7 +76,26 @@ class AuthenticationService {
     async validateUser(
         request
     ) {
-        if(!request.session.username || !request.session.uid) return false;
+        const session_username = request.session.username;
+        const session_id = request.session.uid;
+
+        if(!session_username || !session_password) return false;
+
+        // Check if username and id match
+        const user = await mysql_database.querySearchUserId(username); 
+
+        // No user found
+        if(user == -1) return false;
+
+        const user_id = user.user_id;
+
+        const user_data = await mysql_database.queryUserDetails(user_id); 
+
+        if(user_data.user_id != session_id) return false;
+        
+        if(user_data.username != session_username) return false;
+
+
         return true;
     } // End valideUser
     
