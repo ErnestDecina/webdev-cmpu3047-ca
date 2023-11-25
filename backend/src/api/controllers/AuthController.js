@@ -11,8 +11,11 @@ class AuthController {
             const reuqest = req;
             
             // Check if login failed
-            if( !await AuthenticationService.login(reuqest) ) {}
+            if( !await AuthenticationService.login(reuqest) ) {
                 res.status(401).send({"auth": false});
+                return;
+            }
+                
 
 
             res.status(200).send({"auth": true});
@@ -45,8 +48,11 @@ class AuthController {
     ) {
         const reuqest = req;
 
-        if(! await AuthenticationService.logout(reuqest))
+        if(! await AuthenticationService.logout(reuqest)) {
             res.status(401).send({"auth": false});
+            return;
+        }   
+            
 
         res.status(200).send({"auth": true});
     } // End logout()
