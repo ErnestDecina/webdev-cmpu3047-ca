@@ -1,26 +1,42 @@
 import AuthenticationService from "../services/AuthenticationService.js";
 
 
+
 class AuthController {
-
-
     async login (
         req,
         res
     ) {
         try {
             const reuqest = req;
-
+            
             // Check if login failed
-            if( !await AuthenticationService.login(reuqest) ) 
+            if( !await AuthenticationService.login(reuqest) ) {}
                 res.status(401).send({"auth": false});
-        
+
 
             res.status(200).send({"auth": true});
         } catch (error) {
             res.status(401)
         }
     } // End login()
+
+
+    async signup(
+        req,
+        res
+    ) {
+        const request = req;
+
+        if(!await AuthenticationService.signup(request)) {
+            res.status(409).send({"auth": false});
+            return;
+        }
+            
+
+            res.status(200).send({"auth": true});
+
+    } // End signup()
 
 
     async logout (
