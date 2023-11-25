@@ -79,7 +79,7 @@ async function formValues() {
     displayLogin(data)
 }
 
-// Changing text after loading page
+// Onload check if the user ws previously authenticated
 async function changeAuth() {
     response = await fetch("http://localhost:8000/api/v1/check", {
         method: "GET",
@@ -89,6 +89,22 @@ async function changeAuth() {
     data = await response.json()
     console.log(data)
 
+    // Change page depending on auth
     displayLogin(data)
 }
 
+
+// Change between signup and login page
+function changeToSignup() {
+    var login = document.getElementById('loginPage');
+    var signup = document.getElementById('signupPage');
+
+    if (login.style.display == "block") {
+        login.style.display = "none"
+        signup.style.display = "block"
+    }
+    else {
+        login.style.display = "block"
+        signup.style.display = "none"
+    }
+}
