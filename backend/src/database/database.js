@@ -61,9 +61,15 @@ export class mySQLDatabse {
     }
 
 
-    async insertNewUser(username, email, password) {
+    async insertNewUser(username, email, password, first_name, last_name) {
             // Create query string
-            const query_string = `INSERT INTO user (username, email, password) VALUES (\'${username}\', \'${email}\', \'${password}\');`;
+            const query_string = `INSERT INTO user (username, email, password, first_name, last_name) VALUES (\'${username}\', \'${email}\', \'${password}\', \'${first_name}\', \'${last_name}\');`;
             const results = await this.mysql_database_connection.promise().query(query_string);
+    }
+
+
+    async deleteUser(uid) {
+        const query_string = `DELETE FROM user WHERE user_id = ${uid};`;
+        const results = await this.mysql_database_connection.promise().query(query_string);
     }
 } // End class mySQLDatabase
