@@ -12,17 +12,17 @@ class AuthenticationService {
     async login(
         request
     ) {
-        const username = request.body.username;
+        const email = request.body.email;
         const password = request.body.password;
 
         // Check if username or password is empty.
-        if( !username || !password ) {
+        if( !email || !password ) {
             return false;
         } // End if 
 
         // Look for using in DB
         // Look for user using index
-        const user = await mysql_database.querySearchUserId(username); 
+        const user = await mysql_database.querySearchUserId(email); 
         
         // No user found
         if(user == -1) return false;
@@ -37,6 +37,7 @@ class AuthenticationService {
         // Set Session Data
         request.session.uid = user_data.user_id;
         request.session.username = user_data.username;
+        request.session.email = user_data.email;
 
         return true;
     } // End login()
@@ -95,7 +96,7 @@ class AuthenticationService {
     async validateUser(
         request
     ) {
-        if(!request.session.username || !request.session.uid) return false;
+        if(!request.session.username || !request.session.uid || !request.session.email) return false;
 
         return true;
     } // End valideUser
