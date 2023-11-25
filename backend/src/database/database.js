@@ -31,11 +31,11 @@ export class mySQLDatabse {
     }
 
 
-    async querySearchUserId(username) {
-        if (!username) return -1;
+    async querySearchUserId(email) {
+        if (!email) return -1;
 
         // Create query string
-        const query_string = `SELECT user_id FROM user WHERE username = \'${username}\';`;
+        const query_string = `SELECT user_id FROM user WHERE email = \'${email}\';`;
 
 
         const results = await this.mysql_database_connection.promise().query(query_string);
