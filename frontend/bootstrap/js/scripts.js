@@ -54,7 +54,7 @@ function displayLogin(data) {
 
 }
 
-// Getting form values 
+// Getting form values for login
 async function formValues() {
     email = document.getElementById("email").value;
     password = document.getElementById("password").value;
@@ -79,7 +79,38 @@ async function formValues() {
     displayLogin(data)
 }
 
-// Onload check if the user ws previously authenticated
+// Getting form values for signup page
+async function createAccount() {
+    form_firstname = document.getElementById("firstName").value;
+    form_secondname = document.getElementById("lastName").value;
+    form_username = document.getElementById("username").value;
+    form_email = document.getElementById("emailCreate").value;
+    form_password = document.getElementById("passwordCreate").value;
+
+    accountDetails = {
+        first_name : form_firstname,
+        second_name : form_secondname,
+        username : form_username,
+        email : form_email,
+        password : form_password
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/signup", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(accountDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+    
+    data = await response.json()
+    console.log(data)
+}
+
+
+
+// Onload check if the user was previously authenticated
 async function changeAuth() {
     response = await fetch("http://localhost:8000/api/v1/check", {
         method: "GET",
