@@ -33,10 +33,22 @@ async function getAccountDetails() {
     var data = await message.json();
 
     console.log(data);
+
+    // When editing information
+    document.getElementById("editFirstName").placeholder = data.first_name;
+    document.getElementById("editLastName").placeholder = data.last_name;
+    document.getElementById("editUsername").placeholder = data.username;
+    document.getElementById("editEmail").placeholder = data.email;
+    document.getElementById("editPhone").placeholder = data.phone_number;
+    document.getElementById("editAddress").placeholder = data.address;
+
+
+    //Account Page Details
     document.getElementById("profileFirst").innerHTML = data.first_name;
     document.getElementById("profileLast").innerHTML = data.last_name;
     document.getElementById("accountFirstName").innerHTML = data.first_name;
     document.getElementById("accountLastName").innerHTML = data.last_name;
+    document.getElementById("accountUsername").innerHTML = data.username;
     document.getElementById("accountEmail").innerHTML = data.email;
     document.getElementById("accountPhone").innerHTML = data.phone_number;
     document.getElementById("accountAddress").innerHTML = data.address;
@@ -53,24 +65,6 @@ async function deleteAccount() {
     changeAuth()
 }
 
-
-// Changing account page based on session
-function displayLogin(data) {
-
-    var account = document.getElementById('accountPage');
-    var login = document.getElementById('loginPage');
-
-    if (data.auth == true) {
-        account.style.display = "block";
-        login.style.display = "none";
-        getAccountDetails(); // Display account information 
-    }
-    else {
-        account.style.display = "none";
-        login.style.display = "block";
-    }
-
-}
 
 // Getting form values for login
 async function formValues() {
@@ -129,7 +123,6 @@ async function createAccount() {
 }
 
 
-
 // Onload check if the user was previously authenticated
 async function changeAuth() {
     response = await fetch("http://localhost:8000/api/v1/check", {
@@ -142,6 +135,24 @@ async function changeAuth() {
 
     // Change page depending on auth
     displayLogin(data)
+}
+
+// Changing account page based on session
+function displayLogin(data) {
+
+    var account = document.getElementById('accountPage');
+    var login = document.getElementById('loginPage');
+
+    if (data.auth == true) {
+        account.style.display = "block";
+        login.style.display = "none";
+        getAccountDetails(); // Display account information 
+    }
+    else {
+        account.style.display = "none";
+        login.style.display = "block";
+    }
+
 }
 
 
