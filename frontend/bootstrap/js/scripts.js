@@ -42,15 +42,16 @@ async function getAccountDetails() {
     document.getElementById("accountAddress").innerHTML = data.address;
 }
 
-// // Delete account
-// async function deleteAccount() {
+// Delete account
+async function deleteAccount() {
 
-//     let message = await fetch("http://localhost:8000/api/v1/accounts/delete");
+    let message = await fetch("http://localhost:8000/api/v1/accounts/delete");
 
-//     var data = await message.json();
+    var data = await message.json();
 
-//     console.log(data);
-// }
+    console.log(data);
+    changeAuth()
+}
 
 
 // Changing account page based on session
