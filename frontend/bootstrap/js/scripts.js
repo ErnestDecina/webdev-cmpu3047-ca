@@ -25,15 +25,19 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
-
+// Get user account details
 async function getAccountDetails() {
 
-    let message = await fetch("http://localhost:8000/api/v1/test");
+    let message = await fetch("http://localhost:8000/api/v1/accounts/details");
 
     var data = await message.json();
 
     console.log(data);
-    // document.getElementById("testImage").src = data.image_link;
+    document.getElementById("accountFirstName").innerHTML = data.first_name;
+    document.getElementById("accountLastName").innerHTML = data.last_name;
+    document.getElementById("accountEmail").innerHTML = data.email;
+    document.getElementById("accountPhone").innerHTML = data.phone_number;
+    document.getElementById("accountAddress").innerHTML = data.address;
 }
 
 
@@ -46,6 +50,7 @@ function displayLogin(data) {
     if (data.auth == true) {
         account.style.display = "block";
         login.style.display = "none";
+        getAccountDetails(); // Display account information 
     }
     else {
         account.style.display = "none";
