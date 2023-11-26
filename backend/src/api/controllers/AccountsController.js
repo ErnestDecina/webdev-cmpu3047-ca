@@ -39,6 +39,11 @@ class AccountsController {
         res
     ) {
         const request = req;
+        
+        if(!await AuthenticationService.logout(request)) {
+            res.status(401).send({"status": false});
+            return;
+        }
 
         if(!await AccountsService.delete(request)) {
             res.status(401).send({"status": false});
