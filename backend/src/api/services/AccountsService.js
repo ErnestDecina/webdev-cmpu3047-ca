@@ -122,6 +122,10 @@ class AccountsService {
                 new_bio,
                 new_password
             );
+
+            // Update the users session
+            request.session.username = new_username;
+            request.session.email = new_email;
     
             return true;
         } // End delete()
