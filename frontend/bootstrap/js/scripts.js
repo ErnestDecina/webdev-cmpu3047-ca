@@ -38,7 +38,7 @@ async function getAccountDetails() {
     document.getElementById("editFirstName").placeholder = data.first_name;
     document.getElementById("editLastName").placeholder = data.last_name;
     document.getElementById("editUsername").placeholder = data.username;
-    // document.getElementById("editEmail").placeholder = data.email;
+    document.getElementById("editEmail").placeholder = data.email;
     document.getElementById("editPhone").placeholder = data.phone_number;
     document.getElementById("editAddress").placeholder = data.address;
     document.getElementById("editBio").placeholder = data.bio;
@@ -52,7 +52,7 @@ async function getAccountDetails() {
     document.getElementById("accountFirstName").innerHTML = data.first_name;
     document.getElementById("accountLastName").innerHTML = data.last_name;
     document.getElementById("accountUsername").innerHTML = data.username;
-    // document.getElementById("accountEmail").innerHTML = data.email;
+    document.getElementById("accountEmail").innerHTML = data.email;
     document.getElementById("accountPhone").innerHTML = data.phone_number;
     document.getElementById("accountAddress").innerHTML = data.address;
 }
@@ -73,7 +73,7 @@ async function editValues() {
     editFirst = document.getElementById("editFirstName").value;
     editLast = document.getElementById("editLastName").value;
     editUsername = document.getElementById("editUsername").value;
-    // editEmail = document.getElementById("editEmail").value;
+    editEmail = document.getElementById("editEmail").value;
     editPhone = document.getElementById("editPhone").value;
     editAddress = document.getElementById("editAddress").value;
     editBio = document.getElementById("editBio").value;
@@ -84,7 +84,7 @@ async function editValues() {
         first_name : editFirst,
         last_name : editLast,
         username : editUsername,
-        // email : editEmail,
+        email : editEmail,
         phone : editPhone,
         address : editAddress,
         bio : editBio,
