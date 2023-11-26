@@ -60,7 +60,7 @@ async function formValues() {
     password = document.getElementById("password").value;
 
     accountDetails = {
-        username : email,
+        email : email,
         password : password
     }
 
@@ -106,6 +106,8 @@ async function createAccount() {
     
     data = await response.json()
     console.log(data)
+
+    changeToSignup()
 }
 
 
