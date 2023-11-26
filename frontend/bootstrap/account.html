@@ -165,13 +165,34 @@
                                 <div class="card-body text-center">
                                   <img src="./assets/favicon.ico" alt="avatar"
                                     class="rounded-circle img-fluid" style="width: 150px;">
-                                  <h5 class="my-3"><span id="profileFirst"></span><span id="profileLast"></span></h5>
+                                  <h5 class="my-3"><span id="profileFirst"></span><span> </span><span id="profileLast"></span></h5>
                                   <p class="text-muted mb-1">Full Stack Developer</p>
                                   <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
                                   <div class="d-flex justify-content-center mb-2">
                                     <button type="button" class="btn btn-outline-primary">Edit Account</button>
-                                    <button type="button" class="btn btn-outline-danger ms-1 ">Delete Account</button>
+                                    <button type="button" class="btn btn-outline-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Account</button>
                                   </div>
+
+                                  <!-- Modal for deleting account -->
+                                  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          You are about to delete your account. Are you sure you would like to proceed?
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
                                 </div>
                               </div>
                               <div class="card mb-4 mb-lg-0">
@@ -201,6 +222,7 @@
                                 </div>
                               </div>
                             </div>
+
                             <!-- Account Details -->
                             <div class="col-lg-8">
                               <div class="card mb-4">
