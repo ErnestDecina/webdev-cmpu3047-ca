@@ -72,4 +72,28 @@ export class mySQLDatabse {
         const query_string = `DELETE FROM user WHERE user_id = ${uid};`;
         const results = await this.mysql_database_connection.promise().query(query_string);
     }
+
+
+    async updateUser(
+        uid, 
+        first_name,
+        last_name,
+        username,
+        email,
+        phone,
+        address,
+        bio,
+        password
+    ) {
+        const query_string = `
+        UPDATE user
+        SET username = \'${username}\', bio = \'${bio}\',
+            email = \'${email}\', password = \'${password}\',
+            phone_number = \'${phone}\', address =\'${address}\',
+            first_name = \'${first_name}\', last_name = \'${last_name}\'
+        WHERE user_id = ${uid};`;
+
+
+        const results = await this.mysql_database_connection.promise().query(query_string);
+    }
 } // End class mySQLDatabase

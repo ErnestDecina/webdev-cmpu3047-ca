@@ -34,6 +34,21 @@ class AccountsController {
     } // End delete()
 
 
+    async update(
+        req,
+        res
+    ) {
+        const request = req;
+
+        if(!await AccountsService.update(request)) {
+            res.status(401).send({"status": false});
+            return;
+        }
+
+        res.status(200).send({"status": true});
+    } // End delete()
+
+
     async check (
         req,
         res,

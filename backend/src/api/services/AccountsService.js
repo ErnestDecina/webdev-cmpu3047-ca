@@ -38,28 +38,71 @@ class AccountsService {
     } // End signup()
 
 
-        /**
+    /**
      * 
      * @param {*} request 
      */
-        async delete(
+    async delete(
+        request
+    ) {
+        const user_email = request.session.email;
+        const user_uid = request.session.uid;
+
+        // Check if Account Exists
+        const user_data = await mysql_database.querySearchUserId(user_email); 
+
+        // Account not found
+        if(user_data == -1) return false;
+    
+        // Delete account
+        await mysql_database.deleteUser(user_uid);
+
+        return true;
+    } // End delete()
+
+
+    /**
+     * 
+     * @param {*} request 
+     */
+        async update(
             request
         ) {
-            const user_email = request.session.email;
             const user_uid = request.session.uid;
+            const user_email = request.session.email;
     
             // Check if Account Exists
             const user_data = await mysql_database.querySearchUserId(user_email); 
-
+    
             // Account not found
             if(user_data == -1) return false;
+
+            const user = await mysql_database.queryUserDetails(user_uid);
+
+            const new_first_name = (request.body.first_name) ?  request.body.first_name : user.first_name;
+            const new_last_name = (request.body.last_name) ? request.body.last_name : user.last_name;
+            const new_username = (request.body.username) ? request.body.username : user.username;
+            const new_email = (request.body.email) ? request.body.email : user.email;
+            const new_phone = (request.body.phone) ? request.body.phone : user.phone_number;
+            const new_address = (request.body.address) ? request.body.address : user.address;
+            const new_bio = (request.body.bio) ? request.body.bio : user.bio;
+            const new_password = (request.body.password) ? await bcrypt.hash(request.body.password, bcrypt_salt_rounds) : user.password;
         
-            // Delete account
-            await mysql_database.deleteUser(user_uid);
-
+            // Update account
+            await mysql_database.updateUser(
+                user_uid,
+                new_first_name,
+                new_last_name,
+                new_username,
+                new_email,
+                new_phone,
+                new_address,
+                new_bio,
+                new_password
+            );
+    
             return true;
-        } // End signup()
-
+        } // End delete()
 
 }
 

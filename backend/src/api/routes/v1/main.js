@@ -42,10 +42,15 @@ main_router
 
 
 
-    
+
 // Account Delete //
 main_router
     .route('/accounts/delete')
     .get(AccountsController.check, AccountsController.delete);
+
+// Account Edit //
+main_router
+    .route('/accounts/update')
+    .post(AccountsController.check, AccountsController.update);
 
 
