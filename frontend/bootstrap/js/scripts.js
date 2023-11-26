@@ -79,6 +79,7 @@ async function editValues() {
     editBio = document.getElementById("editBio").value;
     editPassword = document.getElementById("editPassword").value;
 
+    clearEditForm();
 
     accountDetails = {
         first_name : editFirst,
@@ -210,4 +211,17 @@ function changeToSignup() {
         login.style.display = "block"
         signup.style.display = "none"
     }
+}
+
+
+// Clearing edit modal after changing details 
+function clearEditForm() {
+    document.getElementById('editFirstName').value='';
+    document.getElementById('editLastName').value='';
+    document.getElementById('editUsername').value='';
+    document.getElementById('editEmail').value='';
+    document.getElementById('editPhone').value='';
+    document.getElementById('editAddress').value='';
+    document.getElementById('editBio').value='';
+    document.getElementById('editPassword').value='';
 }
