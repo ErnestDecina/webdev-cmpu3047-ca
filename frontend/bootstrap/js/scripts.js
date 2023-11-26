@@ -33,6 +33,8 @@ async function getAccountDetails() {
     var data = await message.json();
 
     console.log(data);
+    document.getElementById("profileFirst").innerHTML = data.first_name;
+    document.getElementById("profileLast").innerHTML = data.last_name;
     document.getElementById("accountFirstName").innerHTML = data.first_name;
     document.getElementById("accountLastName").innerHTML = data.last_name;
     document.getElementById("accountEmail").innerHTML = data.email;
