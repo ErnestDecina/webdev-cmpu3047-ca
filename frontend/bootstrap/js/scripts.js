@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 
-async function getapi() {
+async function getAccountDetails() {
 
     let message = await fetch("http://localhost:8000/api/v1/test");
 
