@@ -74,7 +74,7 @@ class AccountsController {
     async check (
         req,
         res,
-        next
+        next 
     ) {
         if(! await AuthenticationService.validateUser(req)) {
             res.status(401).send({"status": false});

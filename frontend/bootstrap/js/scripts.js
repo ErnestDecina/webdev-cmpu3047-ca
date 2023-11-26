@@ -25,34 +25,88 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
+// Get user account details
+async function getAccountDetails() {
 
-async function getapi() {
-
-    let message = await fetch("http://localhost:8000/api/v1/test");
+    let message = await fetch("http://localhost:8000/api/v1/accounts/details");
 
     var data = await message.json();
 
     console.log(data);
-    // document.getElementById("testImage").src = data.image_link;
+
+    // When editing information
+    document.getElementById("editFirstName").placeholder = data.first_name;
+    document.getElementById("editLastName").placeholder = data.last_name;
+    document.getElementById("editUsername").placeholder = data.username;
+    document.getElementById("editEmail").placeholder = data.email;
+    document.getElementById("editPhone").placeholder = data.phone_number;
+    document.getElementById("editAddress").placeholder = data.address;
+    document.getElementById("editBio").placeholder = data.bio;
+
+
+    //Account Page Details
+    document.getElementById("profileFirst").innerHTML = data.first_name;
+    document.getElementById("profileLast").innerHTML = data.last_name;
+    document.getElementById("profileBio").innerHTML = data.bio;
+
+    document.getElementById("accountFirstName").innerHTML = data.first_name;
+    document.getElementById("accountLastName").innerHTML = data.last_name;
+    document.getElementById("accountUsername").innerHTML = data.username;
+    document.getElementById("accountEmail").innerHTML = data.email;
+    document.getElementById("accountPhone").innerHTML = data.phone_number;
+    document.getElementById("accountAddress").innerHTML = data.address;
 }
 
+// Delete account
+async function deleteAccount() {
 
-// Changing account page based on session
-function displayLogin(data) {
+    let message = await fetch("http://localhost:8000/api/v1/accounts/delete");
 
-    var account = document.getElementById('accountPage');
-    var login = document.getElementById('loginPage');
+    var data = await message.json();
 
-    if (data.auth == true) {
-        account.style.display = "block";
-        login.style.display = "none";
-    }
-    else {
-        account.style.display = "none";
-        login.style.display = "block";
-    }
-
+    console.log(data);
+    changeAuth()
 }
+
+// Edit account
+async function editValues() {
+    editFirst = document.getElementById("editFirstName").value;
+    editLast = document.getElementById("editLastName").value;
+    editUsername = document.getElementById("editUsername").value;
+    editEmail = document.getElementById("editEmail").value;
+    editPhone = document.getElementById("editPhone").value;
+    editAddress = document.getElementById("editAddress").value;
+    editBio = document.getElementById("editBio").value;
+    editPassword = document.getElementById("editPassword").value;
+
+    clearEditForm();
+
+    accountDetails = {
+        first_name : editFirst,
+        last_name : editLast,
+        username : editUsername,
+        email : editEmail,
+        phone : editPhone,
+        address : editAddress,
+        bio : editBio,
+        password : editPassword
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/accounts/update", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(accountDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+    
+    data = await response.json()
+    console.log(data)
+
+    changeAuth()
+}
+
 
 // Getting form values for login
 async function formValues() {
@@ -60,7 +114,7 @@ async function formValues() {
     password = document.getElementById("password").value;
 
     accountDetails = {
-        username : email,
+        email : email,
         password : password
     }
 
@@ -106,8 +160,9 @@ async function createAccount() {
     
     data = await response.json()
     console.log(data)
-}
 
+    changeToSignup()
+}
 
 
 // Onload check if the user was previously authenticated
@@ -124,6 +179,24 @@ async function changeAuth() {
     displayLogin(data)
 }
 
+// Changing account page based on session
+function displayLogin(data) {
+
+    var account = document.getElementById('accountPage');
+    var login = document.getElementById('loginPage');
+
+    if (data.auth == true) {
+        account.style.display = "block";
+        login.style.display = "none";
+        getAccountDetails(); // Display account information 
+    }
+    else {
+        account.style.display = "none";
+        login.style.display = "block";
+    }
+
+}
+
 
 // Change between signup and login page
 function changeToSignup() {
@@ -137,5 +210,32 @@ function changeToSignup() {
     else {
         login.style.display = "block"
         signup.style.display = "none"
+    }
+}
+
+
+// Clearing edit modal after changing details 
+function clearEditForm() {
+    document.getElementById('editFirstName').value='';
+    document.getElementById('editLastName').value='';
+    document.getElementById('editUsername').value='';
+    document.getElementById('editEmail').value='';
+    document.getElementById('editPhone').value='';
+    document.getElementById('editAddress').value='';
+    document.getElementById('editBio').value='';
+    document.getElementById('editPassword').value='';
+    document.getElementById('editPassword').type= "password"
+    document.getElementById('checkPass').checked= false
+}
+
+
+// Toggle password visibility 
+function togglePass() {
+    var x = document.getElementById("editPassword");
+
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
     }
 }
