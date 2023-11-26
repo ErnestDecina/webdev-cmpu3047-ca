@@ -65,6 +65,8 @@ class AuthenticationService {
     async signup(
         request
     ) {
+        const user_first_name = request.body.first_name;
+        const user_last_name = request.body.second_name;
         const user_username = request.body.username;
         const user_email = request.body.email;
         const user_password = request.body.password;
@@ -82,7 +84,7 @@ class AuthenticationService {
 
         // Create a new account
         const hash_password = await bcrypt.hash(user_password, bcrypt_salt_rounds);
-        mysql_database.insertNewUser(user_username, user_email, hash_password);
+        mysql_database.insertNewUser(user_username, user_email, hash_password, user_first_name, user_last_name);
 
         return true;
     } // End signup()

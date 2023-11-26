@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import ExampleController from '../../controllers/ExampleController.js';
 import AuthController from '../../controllers/AuthController.js';
+import AccountsController from '../../controllers/AccountsController.js';
 
 export const main_router = Router();
 
@@ -27,7 +28,7 @@ main_router
 // Signup //
 main_router
     .route('/signup')
-    .post(AuthController.signup);
+    .post(AccountsController.signup);
 
 // Logout //
 main_router
@@ -38,5 +39,21 @@ main_router
 main_router
     .route('/check')
     .get(AuthController.check);
+
+
+// Account Details //
+main_router
+    .route('/accounts/details')
+    .get(AccountsController.check, AccountsController.getUserDetails);
+
+// Account Delete //
+main_router
+    .route('/accounts/delete')
+    .get(AccountsController.check, AccountsController.delete);
+
+// Account Edit //
+main_router
+    .route('/accounts/update')
+    .post(AccountsController.check, AccountsController.update);
 
 

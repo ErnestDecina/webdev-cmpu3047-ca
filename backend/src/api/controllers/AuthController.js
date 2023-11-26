@@ -25,23 +25,6 @@ class AuthController {
     } // End login()
 
 
-    async signup(
-        req,
-        res
-    ) {
-        const request = req;
-
-        if(!await AuthenticationService.signup(request)) {
-            res.status(409).send({"auth": false});
-            return;
-        }
-            
-
-            res.status(200).send({"auth": true});
-
-    } // End signup()
-
-
     async logout (
         req,
         res
