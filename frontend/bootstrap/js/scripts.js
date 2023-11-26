@@ -224,4 +224,18 @@ function clearEditForm() {
     document.getElementById('editAddress').value='';
     document.getElementById('editBio').value='';
     document.getElementById('editPassword').value='';
+    document.getElementById('editPassword').type= "password"
+    document.getElementById('checkPass').checked= false
+}
+
+
+// Toggle password visibility 
+function togglePass() {
+    var x = document.getElementById("editPassword");
+
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
 }
