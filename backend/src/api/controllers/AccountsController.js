@@ -18,6 +18,21 @@ class AccountsController {
         res.status(200).send({"auth": true});
     } // End signup()
 
+
+    async getUserDetails(
+        req,
+        res
+    ) {
+        const request = req;
+        const data = await AccountsService.getUserDetails(request) 
+        if(!data) {
+            res.status(401).send({"status": false});
+            return;
+        }
+
+        res.status(200).send(data);
+    } // End delete()
+
     
     async delete(
         req,
@@ -59,7 +74,6 @@ class AccountsController {
             return; 
         } // End if
             
-
         next();
     } // End exmapleSessionCheck()
 } // End class AuthController

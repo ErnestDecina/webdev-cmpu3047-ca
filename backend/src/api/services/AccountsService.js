@@ -38,6 +38,28 @@ class AccountsService {
     } // End signup()
 
 
+        /**
+     * 
+     * @param {*} request 
+     */
+        async getUserDetails(
+            request
+        ) {
+            const user_id = request.session.uid;
+            const user_email = request.session.email;
+
+            // Check if Account Exists
+            const user_data = await mysql_database.querySearchUserId(user_email); 
+
+            // Account not found
+            if(user_data == -1) return undefined;
+            
+            var user_details = await mysql_database.queryUserDetails(user_id);
+            user_details.password = "";
+            return user_details;
+        } // End signup()
+
+
     /**
      * 
      * @param {*} request 

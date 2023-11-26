@@ -41,7 +41,10 @@ main_router
     .get(AuthController.check);
 
 
-
+// Account Details //
+main_router
+    .route('/accounts/details')
+    .get(AccountsController.check, AccountsController.getUserDetails);
 
 // Account Delete //
 main_router
