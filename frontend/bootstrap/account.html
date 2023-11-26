@@ -166,10 +166,9 @@
                                   <img src="./assets/favicon.ico" alt="avatar"
                                     class="rounded-circle img-fluid" style="width: 150px;">
                                   <h5 class="my-3"><span id="profileFirst"></span><span> </span><span id="profileLast"></span></h5>
-                                  <p class="text-muted mb-1">Full Stack Developer</p>
-                                  <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                                  <p class="text-muted mb-3" id="profileBio">Edit Bio</p>
                                   <div class="d-flex justify-content-center mb-2">
-                                    <button type="button" class="btn btn-outline-primary">Edit Account</button>
+                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Account</button>
                                     <button type="button" class="btn btn-outline-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Account</button>
                                   </div>
 
@@ -188,6 +187,67 @@
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteAccount()">Delete</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <!-- Modal for editing account -->
+                                  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="editModalLabel">Edit account details</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <form id="editDetails">
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">First Name</label>
+                                              <input type="text" id="editFirstName" class="form-control form-control-md text-center" placeholder=""  />
+                                            </div>
+
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Last Name</label>
+                                              <input type="text" id="editLastName" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+    
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Username</label>
+                                              <input type="text" id="editUsername" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+                          
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Email Address</label>
+                                              <input type="email" id="editEmail" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+                          
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Phone</label>
+                                              <input type="text" id="editPhone" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Address</label>
+                                              <input type="text" id="editAddress" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Bio</label>
+                                              <input type="text" id="editBio" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Password</label>
+                                              <input type="password" id="editPassword" class="form-control form-control-md text-center" />
+                                              <input type="checkbox" id="checkPass" onclick="togglePass()"> Show Password
+                                            </div>
+                                          </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" onclick="editValues()">Done</button>
                                         </div>
                                       </div>
                                     </div>
@@ -242,6 +302,15 @@
                                     </div>
                                     <div class="col-sm-9">
                                       <p class="text-muted mb-0" id="accountLastName"></p>
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <p class="mb-0">Username</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      <p class="text-muted mb-0" id="accountUsername"></p>
                                     </div>
                                   </div>
                                   <hr>
