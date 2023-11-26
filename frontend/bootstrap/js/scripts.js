@@ -41,11 +41,14 @@ async function getAccountDetails() {
     document.getElementById("editEmail").placeholder = data.email;
     document.getElementById("editPhone").placeholder = data.phone_number;
     document.getElementById("editAddress").placeholder = data.address;
+    document.getElementById("editBio").placeholder = data.bio;
 
 
     //Account Page Details
     document.getElementById("profileFirst").innerHTML = data.first_name;
     document.getElementById("profileLast").innerHTML = data.last_name;
+    document.getElementById("profileBio").innerHTML = data.bio;
+
     document.getElementById("accountFirstName").innerHTML = data.first_name;
     document.getElementById("accountLastName").innerHTML = data.last_name;
     document.getElementById("accountUsername").innerHTML = data.username;
