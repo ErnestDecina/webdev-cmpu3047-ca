@@ -2,6 +2,7 @@ import { Router } from 'express';
 import ExampleController from '../../controllers/ExampleController.js';
 import AuthController from '../../controllers/AuthController.js';
 import AccountsController from '../../controllers/AccountsController.js';
+import ExerciseController from '../../controllers/ExerciseController.js';
 
 export const main_router = Router();
 
@@ -55,5 +56,11 @@ main_router
 main_router
     .route('/accounts/update')
     .post(AccountsController.check, AccountsController.update);
+
+
+// Exercise Create //
+main_router
+    .route('/exercises')
+    .post(AccountsController.check, ExerciseController.createExercise);
 
 
