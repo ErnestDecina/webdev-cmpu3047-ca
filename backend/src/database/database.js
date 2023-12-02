@@ -135,7 +135,7 @@ export class mySQLDatabse {
     }
 
 
-    async getExercises(
+    async getExercisesByUserID(
         uid
     ) {
         const query_string = "SELECT * FROM exercise WHERE fk_user_id = ?;"
@@ -143,6 +143,19 @@ export class mySQLDatabse {
         const result = await this.mysql_database_connection.promise().query(
             query_string,
             [uid]
+        );
+
+        return result;
+    }
+
+    async getExerciseByExerciseID(
+        exercise_id
+    ) {
+        const query_string = "SELECT * FROM exercise WHERE exercise_id = ?;"
+
+        const result = await this.mysql_database_connection.promise().query(
+            query_string,
+            [exercise_id]
         );
 
         return result;
@@ -177,5 +190,84 @@ export class mySQLDatabse {
         );
     }
 
+
+    // Workout
+    async getWorkouts(
+        uid
+    ) {
+        const query_string = "SELECT * FROM workout WHERE fk_user_id = ?;"
+        const result = await this.mysql_database_connection.promise().query(
+            query_string,
+            [uid]
+        );
+
+        return result;
+    }
+
+    async createWorkout(
+        uid,
+        workout_name
+    ) {
+        const query_string = "INSERT INTO workout (name, status, fk_user_id) VALUES ( ? , ? , ? )";
+
+        const result = await this.mysql_database_connection.promise().query(
+            query_string,
+            [workout_name, false, uid]
+        );
+    }
+
+    async deleteWorkout(
+        workout_id
+    ) {
+        const query_string = `DELETE FROM workout WHERE workout_id = ?;`;
+        const results = await this.mysql_database_connection.promise().query(
+            query_string, 
+            [workout_id]
+        );
+    }
+
+
+
+
+    // Sets
+    async getSets(
+        workout_id
+    ) {
+         const query_string = "SELECT * FROM sets WHERE fk_workout_id = ?";
+         const result = await this.mysql_database_connection.promise().query(
+            query_string, 
+            [workout_id]
+        );
+
+        return result[0];
+    }
+
+    async createSet(
+
+    ) {
+
+    }
+
+    async deleteSetUsingSetID(
+
+    ) {
+
+    }
+
+    async deleteSetUsingWorkoutID(
+        workout_id
+    ) {
+        const query_string = "DELETE FROM sets WHERE fk_workout_id = ?";
+        const results = await this.mysql_database_connection.promise().query(
+            query_string, 
+            [workout_id]
+        );
+    }
+
+    async updateSet(
+
+    ) {
+
+    }
 
 } // End class mySQLDatabase

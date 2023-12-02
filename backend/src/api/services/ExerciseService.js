@@ -34,7 +34,7 @@ class ExerciseService {
     ) {
         const session_uid = request.session.uid;
 
-        const data = await mysql_database.getExercises(
+        const data = await mysql_database.getExercisesByUserID(
             session_uid
         );
 
@@ -49,7 +49,7 @@ class ExerciseService {
         const exercise_id = request.body.exercise_id;
 
         // Check if User owns the Exercise
-        const exercises = await mysql_database.getExercises(session_uid);
+        const exercises = await mysql_database.getExercisesByUserID(session_uid);
         var data = undefined;
 
         exercises[0].forEach(exercise => {
@@ -74,7 +74,7 @@ class ExerciseService {
         if(!request.body.exercise_name) return false;
 
         // Check if User owns the Exercise
-        const exercises = await mysql_database.getExercises(session_uid);
+        const exercises = await mysql_database.getExercisesByUserID(session_uid);
         var data = undefined;
 
         exercises[0].forEach(exercise => {
@@ -85,7 +85,7 @@ class ExerciseService {
         if(!data) return false;
 
         const new_exercise_name = (request.body.exercise_name) ?  request.body.exercise_name : data.name;
-        const new_presonal_record = (request.body.exercise_pr) ? request.body.exercise_pr : data.personal_record;
+        const new_presonal_record = (request.body.exercise_pr) ? request.body.exe : data.personal_record;
 
         mysql_database.updateExercise(exercise_id, new_exercise_name, new_presonal_record);
 

@@ -1,18 +1,28 @@
 import AccountsService from "../services/AccountsService.js";
 import AuthenticationService from "../services/AuthenticationService.js";
 import ExerciseService from "../services/ExerciseService.js";
+import WorkoutService from "../services/WorkoutService.js";
 
 
 
-class ExerciseController {
-    async createExercise(
+class WorkoutController {
+    async getWorkouts(
         req,
         res
     ) {
+        const request = req;
+        const data = await WorkoutService.getWorkouts(request);
+        res.status(200).send(data);
+    } // End getWorkouts
 
+
+    async createWorkout(
+        req,
+        res
+    ) {
         const request = req;
 
-        if(! await ExerciseService.createExercise(request) ) {
+        if(! await WorkoutService.createWorkout(request) ) {
             res.status(422).send({status: false});
             return;
         }
@@ -23,23 +33,15 @@ class ExerciseController {
     } // End create Exercise
 
 
-    async getExercises(
-        req,
-        res
-    ) {
 
-        const request = req;
-        const data = await ExerciseService.getExercises(request);
-        res.status(200).send(data);
-    } // End create Exercise
     
-    async deleteExercise(
+    async deleteWorkout(
         req,
         res
     ) {
         const request = req;
 
-        if(! await ExerciseService.deleteExercise(request)) {
+        if(! await WorkoutService.deleteWorkout(request)) {
             res.status(422).send({status: false});
             return;
         }
@@ -62,4 +64,4 @@ class ExerciseController {
     }
 } // End class AuthController
 
-export default new ExerciseController();
+export default new WorkoutController();
