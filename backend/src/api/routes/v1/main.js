@@ -63,4 +63,17 @@ main_router
     .route('/exercises')
     .post(AccountsController.check, ExerciseController.createExercise);
 
+// Exercises Get //
+main_router
+    .route('/exercises')
+    .get(AccountsController.check, ExerciseController.getExercises);
 
+// Exercises Delete //
+main_router
+    .route('/exercises')
+    .delete(AccountsController.check, ExerciseController.deleteExercise);
+
+// Exercises Update //
+main_router
+    .route('/exercises/update')
+    .post(AccountsController.check, ExerciseController.updateExercise)

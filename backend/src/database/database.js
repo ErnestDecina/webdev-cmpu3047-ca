@@ -135,4 +135,47 @@ export class mySQLDatabse {
     }
 
 
+    async getExercises(
+        uid
+    ) {
+        const query_string = "SELECT * FROM exercise WHERE fk_user_id = ?;"
+
+        const result = await this.mysql_database_connection.promise().query(
+            query_string,
+            [uid]
+        );
+
+        return result;
+    }
+
+    async deleteExercise(
+        exercise_id
+    ) {
+        const query_string = `DELETE FROM exercise WHERE exercise_id = ?;`;
+        const results = await this.mysql_database_connection.promise().query(
+            query_string, 
+            [exercise_id]
+        );
+    }
+
+    async updateExercise(
+        exercise_id, 
+        new_exercise_name,
+        new_exercise_pr
+    ) {
+        const query_string = `
+        UPDATE exercise
+        SET 
+            name = ?, 
+            personal_record = ?
+        WHERE exercise_id = ?;`;
+
+
+        const results = await this.mysql_database_connection.promise().query(
+            query_string,
+            [new_exercise_name, new_exercise_pr, exercise_id]    
+        );
+    }
+
+
 } // End class mySQLDatabase
