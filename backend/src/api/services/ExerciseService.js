@@ -9,11 +9,15 @@ class ExerciseService {
         async createExercise (
             request
         ) {
+            const session_uid = request.session.uid;
             const exercise_name = request.body.exercise_name;
             const exercise_pr = request.body.exercise_pr;
 
-            console.log(exercise_name);
-            console.log(exercise_pr);
+            mysql_database.createExercise(
+                session_uid,
+                exercise_name,
+                exercise_pr
+            );
 
             return true;
         } // End signup()

@@ -120,5 +120,19 @@ export class mySQLDatabse {
         );
     }
 
+    // Exercise
+    async createExercise(
+        uid,
+        exercise_name,
+        exercise_pr
+    ) {
+        const query_string = "INSERT INTO exercise (fk_user_id, name, personal_record) VALUES ( ? , ? , ? );"
+
+        const result = await this.mysql_database_connection.promise().query(
+            query_string,
+            [uid, exercise_name, exercise_pr]
+        );
+    }
+
 
 } // End class mySQLDatabase
