@@ -6,9 +6,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Fitness Tracker</title>
-        <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
@@ -33,15 +31,47 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <h1 class="mt-4">Exercises</h1>
-                    <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-                    <p>
-                        Make sure to keep all page content within the
-                        <code>#page-content-wrapper</code>
-                        . The top navbar is optional, and just for demonstration. Just create an element with the
-                        <code>#sidebarToggle</code>
-                        ID which will toggle the menu when clicked.
-                    </p>
+                    <div class="card mb-4 mt-3">
+                        <div class="card-body text-center">
+                          <img src="./assets/dumbbell.png" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                          <h1>Exercises</h1>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 mb-3 mb-lg-5">
+                                    <div class="overflow-hidden card table-nowrap table-card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0">List of your exercises</h5>
+                                            <button type="button" class="btn btn-outline-primary" onclick="loadExercises()">Add Exercise</button>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <thead class="small text-uppercase bg-body text-muted">
+                                                    <tr>
+                                                        <th>Exercise</th>
+                                                        <th>PR (kg)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="align-middle">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <div class="h6 mb-0 lh-1">Bench Press</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>70</td>
+                                                    </tr>
+                                                    <!-- Add more rows here -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
                 </div>
             </div>
         </div>

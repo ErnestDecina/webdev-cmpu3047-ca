@@ -25,6 +25,11 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
+
+
+//---------------------------------------Accounts---------------------------------------//
+
+
 // Get user account details
 async function getAccountDetails() {
 
@@ -238,4 +243,18 @@ function togglePass() {
     } else {
         x.type = "password";
     }
+}
+
+
+//---------------------------------------Exercises---------------------------------------//
+
+async function loadExercises() {
+    response = await fetch("http://localhost:8000/api/v1/exercises", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    console.log(response)
+    data = await response.json()
+    console.log(data)
 }
