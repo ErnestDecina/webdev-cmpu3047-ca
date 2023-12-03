@@ -302,6 +302,9 @@ async function loadExercises() {
                                         <td>
                                             ${data[i].personal_record}
                                         </td>
+                                        <td>
+                                            <button class="btn btn-outline-danger" onclick="deleteExercise(${data[i].exercise_id});"><i class="bi bi-trash"></i></button>
+                                        </td>
                                     </tr>`;
     }
     node.innerHTML = htmlString;
@@ -338,4 +341,25 @@ async function createExercise() {
 
 }
 
+// Delete exercises
+async function deleteExercise(exerciseID) {
+
+    accountDetails = {
+        exercise_id : exerciseID
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/exercises", {
+        method: "DELETE",
+        credentials: "include",
+        body: JSON.stringify(accountDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+
+    data = await response.json();
+    console.log(data);
+
+    loadExercises();
+}
 
