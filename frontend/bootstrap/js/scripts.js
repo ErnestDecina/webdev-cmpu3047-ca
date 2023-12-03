@@ -248,6 +248,31 @@ function togglePass() {
 
 //---------------------------------------Exercises---------------------------------------//
 
+async function checkExerciseAuth() {
+    response = await fetch("http://localhost:8000/api/v1/check", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+
+    // Change page depending on auth
+    var exercise = document.getElementById('exercisePage');
+    var notExercise = document.getElementById('exerciseNotLoggedIn');
+
+    if (data.auth == true) {
+        exercise.style.display = "block";
+        notExercise.style.display = "none";
+        loadExercises();
+    }
+    else {
+        exercise.style.display = "none";
+        notExercise.style.display = "block";
+    }
+}
+
+
+// Load user's exercises
 async function loadExercises() {
     response = await fetch("http://localhost:8000/api/v1/exercises", {
         method: "GET",
@@ -257,4 +282,60 @@ async function loadExercises() {
     console.log(response)
     data = await response.json()
     console.log(data)
+
+    var node = document.getElementById('exerciseTable');
+    node.innerHTML = '<p>some dynamic html</p>';
+
+    var htmlString = "";
+
+    for (var i = 0; i < data.length; i++) {
+        htmlString = htmlString + `<tr class="align-middle">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <div class="h6 mb-0 lh-1">
+                                                        ${data[i].name}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            ${data[i].personal_record}
+                                        </td>
+                                    </tr>`;
+    }
+    node.innerHTML = htmlString;
 }
+
+// Create a new exercise
+async function createExercise() {
+    editExercise = document.getElementById("addExerciseName").value;
+    editExercisePR = document.getElementById("addExercisePR").value;
+
+
+    // Clear form
+    document.getElementById('addExerciseName').value='';
+    document.getElementById('addExercisePR').value='';
+    
+
+    accountDetails = {
+        exercise_name : editExercise,
+        exercise_pr : editExercisePR
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/exercises", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(accountDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+    
+    data = await response.json()
+
+    loadExercises();
+
+}
+
+
