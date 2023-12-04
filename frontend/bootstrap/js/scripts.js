@@ -25,6 +25,11 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
+
+
+//---------------------------------------Accounts---------------------------------------//
+
+
 // Get user account details
 async function getAccountDetails() {
 
@@ -66,6 +71,17 @@ async function deleteAccount() {
 
     console.log(data);
     changeAuth()
+}
+
+// Log out of account
+async function logoutAccount() {
+    response = await fetch("http://localhost:8000/api/v1/logout", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+    changeAuth();
 }
 
 // Edit account
@@ -113,6 +129,10 @@ async function formValues() {
     email = document.getElementById("email").value;
     password = document.getElementById("password").value;
 
+    // Clear form values
+    document.getElementById('email').value='';
+    document.getElementById('password').value='';
+
     accountDetails = {
         email : email,
         password : password
@@ -130,7 +150,7 @@ async function formValues() {
     data = await response.json()
     console.log(data)
 
-    displayLogin(data)
+    changeAuth();
 }
 
 // Getting form values for signup page
@@ -140,6 +160,13 @@ async function createAccount() {
     form_username = document.getElementById("username").value;
     form_email = document.getElementById("emailCreate").value;
     form_password = document.getElementById("passwordCreate").value;
+
+    // Clear form
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("username").value = "";
+    document.getElementById("emailCreate").value = "";
+    document.getElementById("passwordCreate").value = "";
 
     accountDetails = {
         first_name : form_firstname,
@@ -239,3 +266,122 @@ function togglePass() {
         x.type = "password";
     }
 }
+
+
+//---------------------------------------Exercises---------------------------------------//
+
+async function checkExerciseAuth() {
+    response = await fetch("http://localhost:8000/api/v1/check", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+
+    // Change page depending on auth
+    var exercise = document.getElementById('exercisePage');
+    var notExercise = document.getElementById('exerciseNotLoggedIn');
+
+    if (data.auth == true) {
+        exercise.style.display = "block";
+        notExercise.style.display = "none";
+        loadExercises();
+    }
+    else {
+        exercise.style.display = "none";
+        notExercise.style.display = "block";
+    }
+}
+
+
+// Load user's exercises
+async function loadExercises() {
+    response = await fetch("http://localhost:8000/api/v1/exercises", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    console.log(response)
+    data = await response.json()
+    console.log(data)
+
+    var node = document.getElementById('exerciseTable');
+    node.innerHTML = '<p>some dynamic html</p>';
+
+    var htmlString = "";
+
+    for (var i = 0; i < data.length; i++) {
+        htmlString = htmlString + `<tr class="align-middle">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <div class="h6 mb-0 lh-1">
+                                                        ${data[i].name}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            ${data[i].personal_record}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-outline-danger" onclick="deleteExercise(${data[i].exercise_id});"><i class="bi bi-trash"></i></button>
+                                        </td>
+                                    </tr>`;
+    }
+    node.innerHTML = htmlString;
+}
+
+// Create a new exercise
+async function createExercise() {
+    editExercise = document.getElementById("addExerciseName").value;
+    editExercisePR = document.getElementById("addExercisePR").value;
+
+
+    // Clear form
+    document.getElementById('addExerciseName').value='';
+    document.getElementById('addExercisePR').value='';
+    
+
+    accountDetails = {
+        exercise_name : editExercise,
+        exercise_pr : editExercisePR
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/exercises", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(accountDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+    
+    data = await response.json()
+
+    loadExercises();
+
+}
+
+// Delete exercises
+async function deleteExercise(exerciseID) {
+
+    accountDetails = {
+        exercise_id : exerciseID
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/exercises", {
+        method: "DELETE",
+        credentials: "include",
+        body: JSON.stringify(accountDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+
+    data = await response.json();
+    console.log(data);
+
+    loadExercises();
+}
+

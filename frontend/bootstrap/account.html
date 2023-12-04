@@ -57,13 +57,11 @@
                                         <h5 class="fw-normal mb-3 pb-3" id="TestText" style="letter-spacing: 1px;">Sign into your account</h5>
                       
                                         <div class="form-outline mb-4">
-                                          <input type="email" id="email" class="form-control form-control-lg" />
-                                          <label class="form-label">Email address</label>
+                                          <input type="email" id="email" class="form-control form-control-lg" placeholder="Email Address"/>
                                         </div>
                       
                                         <div class="form-outline mb-4">
-                                          <input type="password" id="password" class="form-control form-control-lg" />
-                                          <label class="form-label">Password</label>
+                                          <input type="password" id="password" class="form-control form-control-lg" placeholder="Password" />
                                         </div>
                       
                                         <div class="pt-1 mb-4">
@@ -108,31 +106,29 @@
                                           <span class="h1 fw-bold mb-0">Logo</span>
                                         </div>
                       
-                                        <h5 class="fw-normal mb-3 pb-3" id="TestText" style="letter-spacing: 1px;">Create a new account</h5>
+                                        <h5 class="fw-normal mb-3 pb-2" id="TestText" style="letter-spacing: 1px;">Create a new account</h5>
 
-                                        <div class="form-outline mb-1">
-                                          <input type="text" id="firstName" class="form-control form-control-lg" />
-                                          <label class="form-label">First Name</label>
+                                        <div class="form-outline mb-4">
+                                          <input type="text" id="firstName" class="form-control form-control-lg" placeholder="First Name" />
+
                                         </div>
 
-                                        <div class="form-outline mb-1">
-                                          <input type="text" id="lastName" class="form-control form-control-lg" />
-                                          <label class="form-label">Last Name</label>
+                                        <div class="form-outline mb-4">
+                                          <input type="text" id="lastName" class="form-control form-control-lg" placeholder="Last Name"/>
+
                                         </div>
 
-                                        <div class="form-outline mb-1">
-                                          <input type="text" id="username" class="form-control form-control-lg" />
-                                          <label class="form-label">Username</label>
+                                        <div class="form-outline mb-4">
+                                          <input type="text" id="username" class="form-control form-control-lg" placeholder="Username" />
                                         </div>
                       
-                                        <div class="form-outline mb-1">
-                                          <input type="email" id="emailCreate" class="form-control form-control-lg" />
-                                          <label class="form-label">Email address</label>
+                                        <div class="form-outline mb-4">
+                                          <input type="email" id="emailCreate" class="form-control form-control-lg" placeholder="Email Address" />
+
                                         </div>
                       
-                                        <div class="form-outline mb-1">
-                                          <input type="password" id="passwordCreate" class="form-control form-control-lg" />
-                                          <label class="form-label">Password</label>
+                                        <div class="form-outline mb-4">
+                                          <input type="password" id="passwordCreate" class="form-control form-control-lg" placeholder="Password"/>
                                         </div>
                       
                                         <div class="pt-1 mb-1">
@@ -166,10 +162,10 @@
                                   <img src="./assets/favicon.ico" alt="avatar"
                                     class="rounded-circle img-fluid" style="width: 150px;">
                                   <h5 class="my-3"><span id="profileFirst"></span><span> </span><span id="profileLast"></span></h5>
-                                  <p class="text-muted mb-3" id="profileBio">Edit Bio</p>
+                                  <p class="text-muted mb-3" id="profileBio">--</p>
                                   <div class="d-flex justify-content-center mb-2">
                                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Account</button>
-                                    <button type="button" class="btn btn-outline-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Account</button>
+                                    <button type="button" class="btn btn-outline-danger ms-1" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</button>
                                   </div>
 
                                   <!-- Modal for deleting account -->
@@ -187,6 +183,26 @@
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteAccount()">Delete</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <!-- Modal for logging out -->
+                                  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="logoutModalLabel">Are you sure?</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          You are about to logout of your account. Are you sure you would like to proceed?
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="logoutAccount();">Logout</button>
                                         </div>
                                       </div>
                                     </div>
@@ -408,6 +424,7 @@
                                       </div>
                                     </div>
                                   </div>
+                                  <button type="button" class="btn btn-outline-danger ms-1 float-end mt-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Account</button>
                                 </div>
                               </div>
                             </div>
