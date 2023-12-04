@@ -306,8 +306,7 @@ async function loadExercises() {
     console.log(data)
 
     var node = document.getElementById('exerciseTable');
-    node.innerHTML = '<p>some dynamic html</p>';
-
+    
     var htmlString = "";
 
     for (var i = 0; i < data.length; i++) {
@@ -337,13 +336,17 @@ async function createExercise() {
     editExercise = document.getElementById("addExerciseName").value;
     editExercisePR = document.getElementById("addExercisePR").value;
 
+    if (editExercisePR == "") {
+        editExercisePR = "0";
+    }
+
 
     // Clear form
     document.getElementById('addExerciseName').value='';
     document.getElementById('addExercisePR').value='';
     
 
-    accountDetails = {
+    exerciseDetails = {
         exercise_name : editExercise,
         exercise_pr : editExercisePR
     }
@@ -351,7 +354,7 @@ async function createExercise() {
     response = await fetch("http://localhost:8000/api/v1/exercises", {
         method: "POST",
         credentials: "include",
-        body: JSON.stringify(accountDetails),
+        body: JSON.stringify(exerciseDetails),
         headers: {
             "Content-type" : "application/json; charset=UTF-8"
         }
@@ -359,21 +362,23 @@ async function createExercise() {
     
     data = await response.json()
 
-    loadExercises();
+    // Wait a second before loading exercises
+    new Promise(resolve => setTimeout(resolve, 1500)).then(() => {loadExercises();});
+
 
 }
 
 // Delete exercises
 async function deleteExercise(exerciseID) {
 
-    accountDetails = {
+    exerciseDetails = {
         exercise_id : exerciseID
     }
 
     response = await fetch("http://localhost:8000/api/v1/exercises", {
         method: "DELETE",
         credentials: "include",
-        body: JSON.stringify(accountDetails),
+        body: JSON.stringify(exerciseDetails),
         headers: {
             "Content-type" : "application/json; charset=UTF-8"
         }
