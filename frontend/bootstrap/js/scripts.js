@@ -73,6 +73,17 @@ async function deleteAccount() {
     changeAuth()
 }
 
+// Log out of account
+async function logoutAccount() {
+    response = await fetch("http://localhost:8000/api/v1/logout", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+    changeAuth();
+}
+
 // Edit account
 async function editValues() {
     editFirst = document.getElementById("editFirstName").value;
@@ -118,6 +129,10 @@ async function formValues() {
     email = document.getElementById("email").value;
     password = document.getElementById("password").value;
 
+    // Clear form values
+    document.getElementById('email').value='';
+    document.getElementById('password').value='';
+
     accountDetails = {
         email : email,
         password : password
@@ -135,7 +150,7 @@ async function formValues() {
     data = await response.json()
     console.log(data)
 
-    displayLogin(data)
+    changeAuth();
 }
 
 // Getting form values for signup page
@@ -145,6 +160,13 @@ async function createAccount() {
     form_username = document.getElementById("username").value;
     form_email = document.getElementById("emailCreate").value;
     form_password = document.getElementById("passwordCreate").value;
+
+    // Clear form
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("username").value = "";
+    document.getElementById("emailCreate").value = "";
+    document.getElementById("passwordCreate").value = "";
 
     accountDetails = {
         first_name : form_firstname,
