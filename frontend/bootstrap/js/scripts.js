@@ -424,13 +424,11 @@ async function loadWorkouts() {
         credentials: "include",
     });
     
-    console.log(response)
     data = await response.json()
-    console.log(data)
 
     var node = document.getElementById('workoutsTable');
     
-    var workoutHTML = "";
+        var workoutHTML = "";
 
 
     for (var workoutIndex = 0; workoutIndex < data.length; workoutIndex++) {
@@ -454,24 +452,17 @@ async function loadWorkouts() {
                 <td>${data[workoutIndex].exercises[exerciseIndex].name}
                 <table>    
             `
-
-            for(var setsIndex = 0; setsIndex < data[workoutIndex].exercises[exerciseIndex].sets.length; setsIndex++) {
-                var setsHTML = "";
-                setsHTML = setsHTML + `<tr>
-                                            <td style="text-indent: 50px;">${data[workoutIndex].exercises[exerciseIndex].sets[setsIndex][0]}</td>
-                                        </tr>`
-                exerciseHTML = exerciseHTML + setsHTML;
-            }
             
-
-
-
+            
+            exerciseHTML = exerciseHTML + `<tr>
+                <td style="text-indent: 50px;">${data[workoutIndex].exercises[exerciseIndex].sets.length} set(s)</td>
+            </tr>`
 
 
             exerciseHTML = exerciseHTML +
-            `
-                </table>
+            `</table>
                 </td>
+                
             </tr>
             `;
 
@@ -483,11 +474,98 @@ async function loadWorkouts() {
 
         
 
-        workoutHTML = workoutHTML + "</table>";
-    }
+        workoutHTML = workoutHTML + " </table>";
+        workoutHTML = workoutHTML + `<td>
+                                        <button class="btn btn-outline-primary"><i class="bi bi-play-fill"></i></button>
+                                    </td>`
 
-    console.log(workoutHTML);
+        workoutHTML = workoutHTML + `<td>
+                                        <button class="btn btn-outline-danger" onclick="deleteWorkout(${data[workoutIndex].workout_id});"><i class="bi bi-trash"></i></button>
+                                    </td>`
+    }
 
     node.innerHTML = workoutHTML;  
     
 }
+
+async function deleteWorkout(workoutID) {
+    workoutDetails = {
+        workout_id : workoutID
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/workouts", {
+        method: "DELETE",
+        credentials: "include",
+        body: JSON.stringify(workoutDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+
+    data = await response.json();
+    console.log(data);
+
+    // Wait a second before loading exercises
+    new Promise(resolve => setTimeout(resolve, 1500)).then(() => {loadWorkouts();});
+}
+
+
+// var node = document.getElementById('workoutsTable');
+    
+//         var workoutHTML = "";
+
+
+//     for (var workoutIndex = 0; workoutIndex < data.length; workoutIndex++) {
+//         workoutHTML = workoutHTML + ` <tr class="align-middle">
+//         <td>
+//             <div class="d-flex align-items-center">
+//                 <div>
+//                     <div class="h6 mb-0 lh-1">
+//                         ${data[workoutIndex].name}
+//                     </div>
+//                 </div>
+//             </div>
+//         </td>
+//         <td>
+//         <table>`;
+
+//         var exerciseHTML = "";
+//         for(var exerciseIndex = 0; exerciseIndex < data[workoutIndex].exercises.length; exerciseIndex++) {
+//             exerciseHTML = exerciseHTML + `
+//             <tr>
+//                 <td>${data[workoutIndex].exercises[exerciseIndex].name}
+//                 <table>    
+//             `
+
+//             for(var setsIndex = 0; setsIndex < data[workoutIndex].exercises[exerciseIndex].sets.length; setsIndex++) {
+//                 var setsHTML = "";
+//                 setsHTML = setsHTML + `<tr>
+//                                             <td style="text-indent: 50px;">${data[workoutIndex].exercises[exerciseIndex].sets[setsIndex][0]}</td>
+//                                         </tr>`
+//                 exerciseHTML = exerciseHTML + setsHTML;
+//             }
+            
+
+
+
+
+
+//             exerciseHTML = exerciseHTML +
+//             `
+//                 </table>
+//                 </td>
+//             </tr>
+//             `;
+
+
+//         }
+
+//         workoutHTML = workoutHTML + exerciseHTML;
+
+
+        
+
+//         workoutHTML = workoutHTML + "</table>";
+//     }
+
+//     node.innerHTML = workoutHTML; 
