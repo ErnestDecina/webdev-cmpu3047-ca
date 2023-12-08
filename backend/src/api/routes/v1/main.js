@@ -96,3 +96,6 @@ main_router
     .delete(AccountsController.check, WorkoutController.deleteWorkout);
 
 // Workout Update
+main_router
+    .route('/workouts/update')
+    .post(AccountsController.check, WorkoutController.updateWorkout);

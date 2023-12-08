@@ -49,13 +49,13 @@ class WorkoutController {
         res.status(200).send({status: true});
     }
 
-    async updateExercise(
+    async updateWorkout(
         req,
         res
     ) {
         const request = req;
         
-        if(! await ExerciseService.updateExercise(request)) {
+        if(! await WorkoutService.updateWorkout(request)) {
             res.status(422).send({status: false});
             return;
         }

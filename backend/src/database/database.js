@@ -164,9 +164,15 @@ export class mySQLDatabse {
     async deleteExercise(
         exercise_id
     ) {
-        const query_string = `DELETE FROM exercise WHERE exercise_id = ?;`;
-        const results = await this.mysql_database_connection.promise().query(
-            query_string, 
+        const query_string_1 = `DELETE FROM sets WHERE fk_exercise_id = ?;`;
+        await this.mysql_database_connection.promise().query(
+            query_string_1, 
+            [exercise_id]
+        );
+
+        const query_string_2 = `DELETE FROM exercise WHERE exercise_id = ?;`;
+        await this.mysql_database_connection.promise().query(
+            query_string_2, 
             [exercise_id]
         );
     }
@@ -204,6 +210,18 @@ export class mySQLDatabse {
         return result;
     }
 
+    async getWorkoutByWorkoutID(
+        workout_id
+    ) {
+        const query_string = "SELECT * FROM workout WHERE workout_id = ?;" 
+        const result = await this.mysql_database_connection.promise().query(
+            query_string,
+            [workout_id]
+        );
+
+        return result;
+    }
+
     async createWorkout(
         uid,
         workout_name
@@ -219,18 +237,43 @@ export class mySQLDatabse {
     async deleteWorkout(
         workout_id
     ) {
-        const query_string = `DELETE FROM workout WHERE workout_id = ?;`;
-        const results = await this.mysql_database_connection.promise().query(
-            query_string, 
+        const query_string_1 = `DELETE FROM sets WHERE fk_workout_id = ?;`;
+        await this.mysql_database_connection.promise().query(
+            query_string_1, 
+            [workout_id]
+        );
+
+        const query_string_2 = `DELETE FROM workout WHERE workout_id = ?;`;
+        await this.mysql_database_connection.promise().query(
+            query_string_2, 
             [workout_id]
         );
     }
 
+    async updateWorkout(
+        workout_id,
+        new_workout_name,
+        new_workout_status
+    ) {
+        const query_string = `
+        UPDATE workout
+        SET 
+            name = ?, 
+            status = ?
+        WHERE workout_id = ?;`;
 
 
+        const results = await this.mysql_database_connection.promise().query(
+            query_string,
+            [new_workout_name, new_workout_status, workout_id]    
+        );
+    }
+
+
+ 
 
     // Sets
-    async getSets(
+    async getSetsByWorkoutId(
         workout_id
     ) {
          const query_string = "SELECT * FROM sets WHERE fk_workout_id = ?";
@@ -242,10 +285,56 @@ export class mySQLDatabse {
         return result[0];
     }
 
-    async createSet(
-
+    async getSetsByWorkoutIdExerciseId(
+        workout_id,
+        exercise_id
     ) {
+         const query_string = "SELECT * FROM sets WHERE fk_workout_id = ? AND fk_exercise_id = ?";
+         const result = await this.mysql_database_connection.promise().query(
+            query_string, 
+            [workout_id, exercise_id]
+        );
 
+        return result[0];
+    }
+
+
+    async geSetByWorkoutIdExerciseIdSetNum(
+        workout_id,
+        exercise_id,
+        set_num
+    ) {
+        const query_string = `
+        SELECT * FROM sets 
+        WHERE fk_workout_id = ? AND
+              fk_exercise_id = ? AND
+              sets = ?;
+        `;
+
+        const result = await this.mysql_database_connection.promise().query(
+           query_string, 
+           [workout_id, exercise_id, set_num]
+       );
+
+       return result[0];
+    }
+
+
+    async createSet(
+        fk_exercise_id,
+        fk_workout_id,
+        set_num,
+        weight,
+        rep
+    ) {
+        const query_string = `
+        INSERT INTO sets (fk_exercise_id, fk_workout_id, sets, weight, rep) 
+        VALUES ( ? , ? , ? , ? , ?);`;
+
+        await this.mysql_database_connection.promise().query(
+            query_string,
+            [fk_exercise_id, fk_workout_id, set_num, weight, rep]
+        );
     }
 
     async deleteSetUsingSetID(
@@ -265,9 +354,22 @@ export class mySQLDatabse {
     }
 
     async updateSet(
-
+        set_id,
+        weight,
+        rep
     ) {
+        const query_string = `
+        UPDATE sets
+        SET 
+            weight = ?,
+            rep = ?
+        WHERE sets_id = ?;`;
 
+
+        const results = await this.mysql_database_connection.promise().query(
+            query_string,
+            [weight, rep, set_id]    
+        );
     }
 
 } // End class mySQLDatabase

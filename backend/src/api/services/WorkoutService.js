@@ -19,9 +19,8 @@ class WorkoutService {
         // Inserting Workouts
         for(const workout of workouts) {
             workout.exercises = [];
-            const sets = await mysql_database.getSets(workout.workout_id);
+            const sets = await mysql_database.getSetsByWorkoutId(workout.workout_id);
             
-            console.log(workout.name);
             for(const set of sets) {
                 const exercise = await mysql_database.getExerciseByExerciseID(set.fk_exercise_id);
 
@@ -44,28 +43,6 @@ class WorkoutService {
                 workout.exercises.push(exercise[0][0]);
             }
         }
-
-
-    
-        // for(var index = 0; index < workouts.length; index++) {
-        //     console.log(index);
-        //     console.log(workouts[index].name);
-        //     workouts[index].exercises = [];
-
-        //     const sets = await mysql_database.getSets(workouts[index].workout_id);
-
-        //     // Get Exercises
-        //     sets[0].forEach(async set => {
-        //         const exercise_id = set.fk_exercise_id;
-                
-        //         const exercise = await mysql_database.getExerciseByExerciseID(exercise_id);
-                
-        //         workouts[index].exercises.push(exercise[0][0]);
-        //     });
-
-        //     console.log(workouts[index]);
-        // }
-
         return workouts;
     } // End signup()
 
@@ -125,8 +102,7 @@ class WorkoutService {
 
         if(!data) return false;
 
-        // Delete Sets belonging to workouts
-        mysql_database.deleteSetUsingWorkoutID(workout_id);
+
 
         // Delete Workouts
         mysql_database.deleteWorkout(workout_id);
@@ -138,6 +114,46 @@ class WorkoutService {
     async updateWorkout(
         request
     ) {
+        const session_uid = request.session.uid;
+        const workout_id = request.body.workout_id;
+        const exercises = request.body.exercises;
+
+        // Check if the user owns the workout
+        const workouts = await mysql_database.getWorkouts(session_uid);
+        var data = undefined;
+
+        workouts[0].forEach(workout => {
+            if(workout.workout_id == workout_id) 
+                data = workout;
+        });
+
+        if(!data) return false;
+
+        // Update workout name or status
+        const workout = await mysql_database.getWorkoutByWorkoutID(workout_id);
+        const workout_name =  request.body.name;
+        const workout_status = request.body.status;
+
+        const new_workout_name = (request.body.name) ? request.body.name : workout[0][0].name;
+        const new_workout_status = (request.body.status != undefined) ? request.body.status : workout[0][0].status;
+
+        await mysql_database.updateWorkout(workout_id, new_workout_name, new_workout_status);
+        await mysql_database.deleteSetUsingWorkoutID(workout_id);
+
+        // Check all exercises
+        for(const exercise of exercises) {
+
+            // Input Set
+            for(const set of exercise.sets) {
+                await mysql_database.createSet(
+                    exercise.exercise_id,
+                    workout_id,
+                    set[0],
+                    set[1],
+                    set[2]
+                );
+            }
+        }
 
         return true;
     }
