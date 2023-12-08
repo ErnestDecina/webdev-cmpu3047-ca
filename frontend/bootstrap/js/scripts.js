@@ -510,6 +510,34 @@ async function deleteWorkout(workoutID) {
 }
 
 
+async function createWorkout() {
+    newWorkout = document.getElementById("addWorkoutName").value;
+
+
+    // Clear form
+    document.getElementById('addWorkoutName').value='';
+    
+
+    workoutDetails = {
+        workout_name : newWorkout
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/workouts", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(workoutDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+    
+    data = await response.json()
+
+    // Wait a second before loading exercises
+    new Promise(resolve => setTimeout(resolve, 1000)).then(() => {loadWorkouts();});
+
+}
+
 // var node = document.getElementById('workoutsTable');
     
 //         var workoutHTML = "";
