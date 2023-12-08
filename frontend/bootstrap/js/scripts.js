@@ -390,3 +390,104 @@ async function deleteExercise(exerciseID) {
     loadExercises();
 }
 
+
+//---------------------------------------Workouts---------------------------------------//
+async function checkWorkoutAuth() {
+    response = await fetch("http://localhost:8000/api/v1/check", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+
+    // // Change page depending on auth
+    var workout = document.getElementById('workoutPage');
+    // var notExercise = document.getElementById('exerciseNotLoggedIn');
+
+    console.log("check function called");
+
+    if (data.auth == true) {
+        workout.style.display = "block";
+        loadWorkouts();
+    }
+    else {
+        workout.style.display = "none";
+        window.location.replace("/account");
+    }
+}
+
+
+// Get workouts 
+async function loadWorkouts() {
+    response = await fetch("http://localhost:8000/api/v1/workouts", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    console.log(response)
+    data = await response.json()
+    console.log(data)
+
+    var node = document.getElementById('workoutsTable');
+    
+    var workoutHTML = "";
+
+
+    for (var workoutIndex = 0; workoutIndex < data.length; workoutIndex++) {
+        workoutHTML = workoutHTML + ` <tr class="align-middle">
+        <td>
+            <div class="d-flex align-items-center">
+                <div>
+                    <div class="h6 mb-0 lh-1">
+                        ${data[workoutIndex].name}
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+        <table>`;
+
+        var exerciseHTML = "";
+        for(var exerciseIndex = 0; exerciseIndex < data[workoutIndex].exercises.length; exerciseIndex++) {
+            exerciseHTML = exerciseHTML + `
+            <tr>
+                <td>${data[workoutIndex].exercises[exerciseIndex].name}
+                <table>    
+            `
+
+            for(var setsIndex = 0; setsIndex < data[workoutIndex].exercises[exerciseIndex].sets.length; setsIndex++) {
+                var setsHTML = "";
+                setsHTML = setsHTML + `<tr>
+                                            <td style="text-indent: 50px;">${data[workoutIndex].exercises[exerciseIndex].sets[setsIndex][0]}</td>
+                                        </tr>`
+                exerciseHTML = exerciseHTML + setsHTML;
+            }
+            
+
+
+
+
+
+            exerciseHTML = exerciseHTML +
+            `
+                </table>
+                </td>
+            </tr>
+            `;
+
+
+        }
+
+        workoutHTML = workoutHTML + exerciseHTML;
+
+
+        
+
+        workoutHTML = workoutHTML + "</table>";
+    }
+
+    console.log(workoutHTML);
+
+    node.innerHTML = workoutHTML;  
+    
+}
