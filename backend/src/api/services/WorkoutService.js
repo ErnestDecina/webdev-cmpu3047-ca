@@ -46,6 +46,56 @@ class WorkoutService {
         return workouts;
     } // End signup()
 
+    async getWorkout (
+        request
+    ) {
+        const session_uid = request.session.uid;
+        const workout_id = request.params.id;
+    
+        var workout = await mysql_database.getWorkoutByWorkoutID(
+            workout_id
+        );
+        
+        workout = workout[0][0];
+        
+
+        // Check if workout exists
+        if(!workout) return undefined;
+
+        
+        // Check if user owns workout
+        if(workout.fk_user_id != session_uid) return undefined;
+        
+        // Inserting Workouts
+        workout.exercises = [];
+        const sets = await mysql_database.getSetsByWorkoutId(workout.workout_id);
+        
+        for(const set of sets) {
+            const exercise = await mysql_database.getExerciseByExerciseID(set.fk_exercise_id);
+
+            // Check for duplicates
+            var duplicate_value = false;
+            for(const ex of workout.exercises) {
+                if(ex.exercise_id == exercise[0][0].exercise_id) {
+                    duplicate_value = true;
+
+                    ex.sets.push([set.sets, set.weight, set.rep]);
+                }
+            }
+
+            if(duplicate_value) continue;
+
+
+            exercise[0][0].sets = [
+                [set.sets, set.weight, set.rep]
+            ];
+
+            workout.exercises.push(exercise[0][0]);
+        }
+
+        return workout;
+    } // End signup()
+
 
     /**
      * 

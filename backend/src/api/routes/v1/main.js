@@ -85,6 +85,10 @@ main_router
     .route('/workouts')
     .get(AccountsController.check, WorkoutController.getWorkouts);
 
+    main_router
+    .route('/workouts/:id')
+    .get(AccountsController.check, WorkoutController.getWorkout);
+
 // Workout Create //
 main_router
     .route('/workouts')

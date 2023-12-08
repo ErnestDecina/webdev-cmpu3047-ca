@@ -15,6 +15,22 @@ class WorkoutController {
         res.status(200).send(data);
     } // End getWorkouts
 
+    async getWorkout(
+        req,
+        res
+    ) {
+        const request = req;
+        const data = await WorkoutService.getWorkout(request);
+
+        if(!data) {
+            res.status(401).send({
+                "name": "ERROR"
+            });
+        } // End if
+
+        res.status(200).send(data);
+    } // End getWorkouts
+
 
     async createWorkout(
         req,
