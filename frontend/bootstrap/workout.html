@@ -34,6 +34,8 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
+
+                    <!-- Workout Page  -->
                     <div id="workoutPage" class="card mb-4 mt-3" style="display: none;">
                         <div class="card-body text-center">
                           <img src="./assets/dumbbell.png" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
@@ -85,6 +87,75 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="workoutsTable">
+                                                
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div id="testdiv">
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Start Workout Page  -->
+                    <div id="startWorkoutPage" class="card mb-4 mt-3" style="display: none;">
+                        <div class="card-body text-center">
+                          <img src="./assets/dumbbell.png" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                          
+                          <h1>Workout Tracker</h1>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 mb-3 mb-lg-5">
+                                    <div class="overflow-hidden card table-nowrap table-card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0">Workout Tracker</h5>
+                                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addWorkoutModal">Add Workouts</button>
+
+                                            <!-- Add Exercise Modal -->
+                                            <div class="modal fade" id="addWorkoutModal" tabindex="-1" role="dialog" aria-labelledby="addWorkoutModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                  <div class="modal-content">
+                                                    <div class="modal-header">
+                                                      <h5 class="modal-title" id="addWorkoutModalLabel">Add a Workout</h5>
+                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                      </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="addWorkout">
+                                                            <div class="form-outline mb-1">
+                                                              <label class="form-label">Workout Name</label>
+                                                              <input type="text" id="addWorkoutName" class="form-control form-control-md" placeholder=""  />
+                                                            </div>
+                                                          </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="createWorkout()">Add Workout</button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <thead class="small text-uppercase bg-body text-muted">
+                                                    <tr>
+                                                        <th>Workout</th>
+                                                        <th>Exercises</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="startWorkoutsTable">
                                                 
                                                 </tbody>
                                             </table>

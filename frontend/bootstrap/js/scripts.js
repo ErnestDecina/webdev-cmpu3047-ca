@@ -428,10 +428,11 @@ async function loadWorkouts() {
 
     var node = document.getElementById('workoutsTable');
     
-        var workoutHTML = "";
+    var workoutHTML = "";
 
 
     for (var workoutIndex = 0; workoutIndex < data.length; workoutIndex++) {
+        console.log(data[workoutIndex]);
         workoutHTML = workoutHTML + ` <tr class="align-middle">
         <td>
             <div class="d-flex align-items-center">
@@ -472,11 +473,9 @@ async function loadWorkouts() {
         workoutHTML = workoutHTML + exerciseHTML;
 
 
-        
-
         workoutHTML = workoutHTML + " </table>";
         workoutHTML = workoutHTML + `<td>
-                                        <button class="btn btn-outline-primary"><i class="bi bi-play-fill"></i></button>
+                                        <button class="btn btn-outline-primary" onclick="startWorkout(${data[workoutIndex].workout_id});"><i class="bi bi-play-fill"></i></button>
                                     </td>`
 
         workoutHTML = workoutHTML + `<td>
@@ -485,6 +484,9 @@ async function loadWorkouts() {
     }
 
     node.innerHTML = workoutHTML;  
+
+    console.log(node.innerHTML);
+    
     
 }
 
@@ -536,6 +538,80 @@ async function createWorkout() {
     // Wait a second before loading exercises
     new Promise(resolve => setTimeout(resolve, 1000)).then(() => {loadWorkouts();});
 
+}
+
+async function startWorkout(workout) {
+
+    apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
+
+    response = await fetch(apiGet, {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+    console.log(data);
+
+    // var workoutPage = document.getElementById('workoutPage');
+    // var startWorkoutPage = document.getElementById('startWorkoutPage');
+
+    // workoutPage.style.display = "none";
+    // startWorkoutPage.style.display = "block";
+
+    // var node = document.getElementById('startWorkoutsTable');
+    
+    // var workoutHTML = "";
+
+
+    
+    // workoutHTML = workoutHTML + ` <tr class="align-middle">
+    // <td>
+    //     <div class="d-flex align-items-center">
+    //         <div>
+    //             <div class="h6 mb-0 lh-1">
+    //                 ${data.name}
+    //             </div>
+    //         </div>
+    //     </div>
+    // </td>
+    // <td>
+    // <table>`;
+
+    // var exerciseHTML = "";
+    // for(var exerciseIndex = 0; exerciseIndex < data.exercises.length; exerciseIndex++) {
+    //     exerciseHTML = exerciseHTML + `
+    //     <tr>
+    //         <td>${data.exercises[exerciseIndex].name}
+    //         <table>    
+    //     `
+        
+        
+    //     for(var setsIndex = 0; setsIndex < data.exercises[exerciseIndex].sets.length; setsIndex++) {
+    //                         var setsHTML = "";
+    //                         setsHTML = setsHTML + `<tr>
+    //                                                     <td style="text-indent: 50px;">${data.exercises[exerciseIndex].sets[setsIndex][2]}</td>
+    //                                                 </tr>`
+    //                         exerciseHTML = exerciseHTML + setsHTML;
+    //                     }
+
+
+    //     exerciseHTML = exerciseHTML +
+    //     `</table>
+    //         </td>
+            
+    //     </tr>
+    //     `;
+
+
+    // }
+
+    // workoutHTML = workoutHTML + exerciseHTML;
+
+
+    // workoutHTML = workoutHTML + " </table>";
+
+
+    // node.innerHTML = workoutHTML;  
 }
 
 // var node = document.getElementById('workoutsTable');
