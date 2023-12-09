@@ -148,7 +148,9 @@ async function formValues() {
     });
     
     data = await response.json()
-    console.log(data)
+    if (data.auth == false) {
+        alert("Incorrect Details")
+    }
 
     changeAuth();
 }
@@ -200,7 +202,6 @@ async function changeAuth() {
     });
     
     data = await response.json()
-    console.log(data)
 
     // Change page depending on auth
     displayLogin(data)
@@ -280,16 +281,14 @@ async function checkExerciseAuth() {
 
     // Change page depending on auth
     var exercise = document.getElementById('exercisePage');
-    var notExercise = document.getElementById('exerciseNotLoggedIn');
 
     if (data.auth == true) {
         exercise.style.display = "block";
-        notExercise.style.display = "none";
         loadExercises();
     }
     else {
         exercise.style.display = "none";
-        notExercise.style.display = "block";
+        window.location.replace("/account");
     }
 }
 
@@ -798,7 +797,7 @@ async function finishedWorkout(data) {
         }
     });
 
-    console.log(data)
+    window.location.replace("/workout");
 }
 
 // var node = document.getElementById('workoutsTable');
