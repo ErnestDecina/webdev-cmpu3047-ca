@@ -591,8 +591,8 @@ async function startWorkout(workout) {
                             setsHTML = setsHTML + `<tr>
                                                         <td>
                                                             Set: ${data.exercises[exerciseIndex].sets[setsIndex][0]} <input id="Exercise${exerciseIndex}Set${setsIndex}" 
-                                                            class="form-control  form-control-sm" type="text" placeholder="Weight (kg)" value="${data.exercises[exerciseIndex].sets[setsIndex][1]}">
-                                                            <input id="RepExercise${exerciseIndex}RepSet${setsIndex}" class="form-control form-control-sm" type="text" 
+                                                            class="form-control  form-control-sm" type="number" placeholder="Weight (kg)" value="${data.exercises[exerciseIndex].sets[setsIndex][1]}">
+                                                            <input id="RepExercise${exerciseIndex}RepSet${setsIndex}" class="form-control form-control-sm" type="number" 
                                                             placeholder="Reps" value="${data.exercises[exerciseIndex].sets[setsIndex][2]}"></td>
                                                         </td>
 
