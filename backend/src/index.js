@@ -1,12 +1,14 @@
-import path from 'path';
-import { express_app } from './server.js';
+import { createExpressServer } from './server.js';
+import { mySQLDatabse } from './database/database.js';
+import { express_port } from './config/express.config.js';
+
+export const mysql_database = new mySQLDatabse();
+export const express_app = createExpressServer();
+
+mysql_database.createMySQLDatabase();
 
 
-console.log(path.resolve());
-express_app.get('/', (req, res) => {
-    res.sendFile(path.join(path.resolve() + '/../frontend/index.html'));
+express_app.listen(express_port, async () => {
+    console.log(`http://localhost:${express_port}/`);    
 });
 
-express_app.listen(8000, () => {
-    console.log('http://localhost:8000/');    
-})

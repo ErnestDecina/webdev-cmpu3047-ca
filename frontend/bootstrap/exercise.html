@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>IDK Fitness</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body onload="checkExerciseAuth()">
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-light">IDK Fitness</div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/">Home</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/exercise">Exercise</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/workout">Workout</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/account">Account</a>
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <button class="btn" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>
+                    </div>
+                </nav>
+                <!-- Page content-->
+
+                <!-- Exercises Page -->
+                <div class="container-fluid">
+                    <div id="exercisePage" class="card mb-4 mt-3" style="display: none;">
+                        <div class="card-body text-center">
+                          <img src="./assets/dumbbell.png" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                          <h1>Exercises</h1>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 mb-3 mb-lg-5">
+                                    <div class="overflow-hidden card table-nowrap table-card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0">List of your exercises</h5>
+                                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addExerciseModal">Add Exercise</button>
+
+                                            <!-- Add Exercise Modal -->
+                                            <div class="modal fade" id="addExerciseModal" tabindex="-1" role="dialog" aria-labelledby="addExerciseModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                  <div class="modal-content">
+                                                    <div class="modal-header">
+                                                      <h5 class="modal-title" id="addExerciseModalLabel">Add an Exercise</h5>
+                                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                      </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="addExercise">
+                                                            <div class="form-outline mb-1">
+                                                              <label class="form-label">Exercise</label>
+                                                              <input type="text" id="addExerciseName" class="form-control form-control-md" placeholder=""  />
+                                                            </div>
+                
+                                                            <div class="form-outline mb-1">
+                                                              <label class="form-label">PR</label>
+                                                              <input type="text" id="addExercisePR" class="form-control form-control-md" placeholder="" />
+                                                            </div>
+                                                          </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="createExercise()">Add Exercise</button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
+
+                                            </div>
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <thead class="small text-uppercase bg-body text-muted">
+                                                    <tr>
+                                                        <th>Exercise</th>
+                                                        <th>PR (kg)</th>
+                                                        <th>Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="exerciseTable">
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div id="testdiv">
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>

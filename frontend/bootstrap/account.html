@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>IDK Fitness</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body onload="changeAuth()">
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-light">IDK Fitness</div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/">Home</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/exercise">Exercise</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/workout">Workout</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/account">Account</a>
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <button class="btn" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>
+                    </div>
+                </nav>
+                <!-- Page content-->
+                <div class="container-fluid">
+                    <!-- Login Page -->
+                    <div id="loginPage" style="display: block;">
+                      <section class="vh-100">
+                        <div class="container py-5 h-100">
+                          <div class="row d-flex justify-content-center align-items-center h-100">
+                            <div class="col col-xl-10">
+                              <div class="card" style="border-radius: 1rem;">
+                                <div class="row g-0">
+                                  <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                    <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGd5bXxlbnwwfHwwfHx8MA%3D%3D"
+                                      alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                                  </div>
+                                  <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                                    <div class="card-body p-4 p-lg-5 text-black">
+                                      <form>
+                      
+                                        <div class="d-flex align-items-center mb-3 pb-1">
+                                          <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                          <span class="h1 fw-bold mb-0">IDK Fitness</span>
+                                        </div>
+                      
+                                        <h5 class="fw-normal mb-3 pb-3" id="TestText" style="letter-spacing: 1px;">Sign into your account</h5>
+                      
+                                        <div class="form-outline mb-4">
+                                          <input type="email" id="email" class="form-control form-control-lg" placeholder="Email Address"/>
+                                        </div>
+                      
+                                        <div class="form-outline mb-4">
+                                          <input type="password" id="password" class="form-control form-control-lg" placeholder="Password" />
+                                        </div>
+                      
+                                        <div class="pt-1 mb-4">
+                                          <button class="btn btn-dark btn-lg btn-block" type="button" onclick="formValues()">Login</button>
+                                        </div>
+                      
+                                        <a class="small text-muted" href="#!">Forgot password?</a>
+                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="#" onclick="changeToSignup()"
+                                            style="color: #393f81;">Register here</a></p>
+                                        <!-- <a href="#!" class="small text-muted">Terms of use.</a>
+                                        <a href="#!" class="small text-muted">Privacy policy</a> -->
+                                      </form>
+                      
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+
+                    <!-- Signup Page -->
+                    <div id="signupPage" style="display: none;">
+                      <section class="vh-100">
+                        <div class="container py-5 h-100">
+                          <div class="row d-flex justify-content-center align-items-center h-100">
+                            <div class="col col-xl-10">
+                              <div class="card" style="border-radius: 1rem;">
+                                <div class="row g-0">
+                                  <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                    <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGd5bXxlbnwwfHwwfHx8MA%3D%3D"
+                                      alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                                  </div>
+                                  <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                                    <div class="card-body p-4 p-lg-5 text-black">
+                                      <form>
+                      
+                                        <div class="d-flex align-items-center mb-3 pb-1">
+                                          <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                          <span class="h1 fw-bold mb-0">IDK Fitness</span>
+                                        </div>
+                      
+                                        <h5 class="fw-normal mb-3 pb-2" id="TestText" style="letter-spacing: 1px;">Create a new account</h5>
+
+                                        <div class="form-outline mb-4">
+                                          <input type="text" id="firstName" class="form-control form-control-lg" placeholder="First Name" />
+
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                          <input type="text" id="lastName" class="form-control form-control-lg" placeholder="Last Name"/>
+
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                          <input type="text" id="username" class="form-control form-control-lg" placeholder="Username" />
+                                        </div>
+                      
+                                        <div class="form-outline mb-4">
+                                          <input type="email" id="emailCreate" class="form-control form-control-lg" placeholder="Email Address" />
+
+                                        </div>
+                      
+                                        <div class="form-outline mb-4">
+                                          <input type="password" id="passwordCreate" class="form-control form-control-lg" placeholder="Password"/>
+                                        </div>
+                      
+                                        <div class="pt-1 mb-1">
+                                          <button class="btn btn-dark btn-lg btn-block" type="button" onclick="createAccount()" >Create Account</button>
+                                        </div>
+                      
+                                        <!-- <a class="small text-muted" href="#!">Forgot password?</a> -->
+                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Have an account? <a href="#" onclick="changeToSignup()"
+                                            style="color: #393f81;">Login here</a></p>
+                                        <!-- <a href="#!" class="small text-muted">Terms of use.</a>
+                                        <a href="#!" class="small text-muted">Privacy policy</a> -->
+                                      </form>
+                      
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    
+                    <!-- Account Page -->
+                    <div id="accountPage" style="background-color: #FFF; display: none;" >
+                        <div class="container py-5">
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <div class="card mb-4">
+                                <div class="card-body text-center">
+                                  <img src="./assets/favicon.ico" alt="avatar"
+                                    class="rounded-circle img-fluid" style="width: 150px;">
+                                  <h5 class="my-3"><span id="profileFirst"></span><span> </span><span id="profileLast"></span></h5>
+                                  <p class="text-muted mb-3" id="profileBio">--</p>
+                                  <div class="d-flex justify-content-center mb-2">
+                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editModal">Edit Account</button>
+                                    <button type="button" class="btn btn-outline-danger ms-1" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</button>
+                                  </div>
+
+                                  <!-- Modal for deleting account -->
+                                  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          You are about to delete your account. Are you sure you would like to proceed?
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteAccount()">Delete</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <!-- Modal for logging out -->
+                                  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="logoutModalLabel">Are you sure?</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          You are about to logout of your account. Are you sure you would like to proceed?
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="logoutAccount();">Logout</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <!-- Modal for editing account -->
+                                  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="editModalLabel">Edit account details</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <form id="editDetails">
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">First Name</label>
+                                              <input type="text" id="editFirstName" class="form-control form-control-md text-center" placeholder=""  />
+                                            </div>
+
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Last Name</label>
+                                              <input type="text" id="editLastName" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+    
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Username</label>
+                                              <input type="text" id="editUsername" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+                          
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Email Address</label>
+                                              <input type="email" id="editEmail" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+                          
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Phone</label>
+                                              <input type="text" id="editPhone" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Address</label>
+                                              <input type="text" id="editAddress" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Bio</label>
+                                              <input type="text" id="editBio" class="form-control form-control-md text-center" placeholder="" />
+                                            </div>
+
+                                            <div class="form-outline mb-1">
+                                              <label class="form-label">Password</label>
+                                              <input type="password" id="editPassword" class="form-control form-control-md text-center" />
+                                              <input type="checkbox" id="checkPass" onclick="togglePass()"> Show Password
+                                            </div>
+                                          </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" onclick="editValues()">Done</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                              <div class="card mb-4 mb-lg-8">
+                                <div class="card-body p-0">
+                                  <!-- <ul class="list-group list-group-flush rounded-3">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                      <i class="fas fa-globe fa-lg text-warning"></i>
+                                      <p class="mb-0">https://mdbootstrap.com</p>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                      <i class="fab fa-github fa-lg" style="color: #333333;"></i>
+                                      <p class="mb-0">mdbootstrap</p>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                      <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                                      <p class="mb-0">@mdbootstrap</p>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                      <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                                      <p class="mb-0">mdbootstrap</p>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                      <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                                      <p class="mb-0">mdbootstrap</p>
+                                    </li>
+                                  </ul> -->
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- Account Details -->
+                            <div class="col-lg-8">
+                              <div class="card mb-4">
+                                <div class="card-body">
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <p class="mb-0">First Name</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      <p class="text-muted mb-0" id="accountFirstName"></p>
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <p class="mb-0">Last Name</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      <p class="text-muted mb-0" id="accountLastName"></p>
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <p class="mb-0">Username</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      <p class="text-muted mb-0" id="accountUsername"></p>
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <p class="mb-0">Email</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      <p class="text-muted mb-0" id="accountEmail"></p>
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <p class="mb-0">Phone</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      <p class="text-muted mb-0" id="accountPhone"></p>
+                                    </div>
+                                  </div>
+                                  <hr>
+                                  <div class="row">
+                                    <div class="col-sm-3">
+                                      <p class="mb-0">Address</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      <p class="text-muted mb-0" id="accountAddress"></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                
+                                  <button type="button" class="btn btn-outline-danger ms-1 float-end mt-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Account</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
