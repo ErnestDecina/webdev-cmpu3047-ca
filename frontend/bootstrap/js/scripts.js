@@ -581,7 +581,8 @@ async function startWorkout(workout) {
         exerciseHTML = exerciseHTML + `
         <tr>
             <td>${data.exercises[exerciseIndex].name} <button class="btn btn-outline-primary btn-sm" onclick="addSet(${data.workout_id}, ${exerciseIndex})">
-            <i class="bi bi-plus"></i></button> <button class="btn btn-outline-danger btn-sm" onclick="deleteSet(${data.workout_id}, ${exerciseIndex})"><i class="bi bi-dash-lg"></i></button> 
+            <i class="bi bi-plus"></i></button> <button class="btn btn-outline-danger btn-sm" onclick="deleteSet(${data.workout_id}, ${exerciseIndex})"><i class="bi bi-dash-lg"></i></button>
+            <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash" onclick="deleteFromWorkout(${data.workout_id}, ${exerciseIndex});"></i></button>
             <table>    
         `
         
@@ -604,17 +605,16 @@ async function startWorkout(workout) {
         exerciseHTML = exerciseHTML +
         `</table>
             </td>
-            
-        </tr>
-        `;
+        </tr>`;
 
 
     }
 
     workoutHTML = workoutHTML + exerciseHTML;
+    
 
 
-    workoutHTML = workoutHTML + " </table>";
+    workoutHTML = workoutHTML + `</table>`;
 
     node.innerHTML = workoutHTML;  
     document.getElementById("finishWorkoutButton").onclick = function () {finishedWorkout(data);};
@@ -642,11 +642,8 @@ async function addSet(workout, exercise) {
         }
     }
 
-    console.log(workout, exercise)
-    console.log(data.exercises[exercise].sets.length)
 
     data.exercises[exercise].sets[data.exercises[exercise].sets.length] = [data.exercises[exercise].sets.length + 1, 0, 0];
-    console.log(data)
 
     updateWorkout(data);
 }
@@ -669,9 +666,6 @@ async function deleteSet(workout, exercise) {
             data.exercises[exerciseIndex].sets[setsIndex][2] = parseInt(rep.value);
         }
     }
-
-    console.log(workout, exercise)
-    console.log(data.exercises[exercise].sets.length)
 
     data.exercises[exercise].sets.pop()
     console.log(data)
@@ -711,8 +705,6 @@ async function loadExerciseWorkout(workout) {
                                     </tr>`;
     }
     node.innerHTML = htmlString;
-
-
 }
 
 async function addExerciseToWorkout(workout, exercise) {
@@ -731,8 +723,6 @@ async function addExerciseToWorkout(workout, exercise) {
     });
     
     workoutData = await workoutResponse.json()
-    console.log(workoutData)
-    console.log(exerciseData)
 
     workoutData.exercises[workoutData.exercises.length] = exerciseData[exercise]
     workoutData.exercises[workoutData.exercises.length - 1].sets = [[1, 0, 0]]
@@ -768,7 +758,22 @@ async function updateWorkout(data) {
 
 }
 
+async function deleteFromWorkout(workout, exerciseID) {
+    apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
 
+    workoutResponse = await fetch(apiGet, {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    workoutData = await workoutResponse.json()
+
+    
+    workoutData.exercises.splice(exerciseID, 1);
+    
+    updateWorkout(workoutData);
+
+}
 
 
 async function finishedWorkout(data) {
