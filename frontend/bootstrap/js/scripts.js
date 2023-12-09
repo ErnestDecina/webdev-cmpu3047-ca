@@ -148,7 +148,9 @@ async function formValues() {
     });
     
     data = await response.json()
-    console.log(data)
+    if (data.auth == false) {
+        alert("Incorrect Details")
+    }
 
     changeAuth();
 }
@@ -200,7 +202,6 @@ async function changeAuth() {
     });
     
     data = await response.json()
-    console.log(data)
 
     // Change page depending on auth
     displayLogin(data)
@@ -280,16 +281,14 @@ async function checkExerciseAuth() {
 
     // Change page depending on auth
     var exercise = document.getElementById('exercisePage');
-    var notExercise = document.getElementById('exerciseNotLoggedIn');
 
     if (data.auth == true) {
         exercise.style.display = "block";
-        notExercise.style.display = "none";
         loadExercises();
     }
     else {
         exercise.style.display = "none";
-        notExercise.style.display = "block";
+        window.location.replace("/account");
     }
 }
 
@@ -306,8 +305,7 @@ async function loadExercises() {
     console.log(data)
 
     var node = document.getElementById('exerciseTable');
-    node.innerHTML = '<p>some dynamic html</p>';
-
+    
     var htmlString = "";
 
     for (var i = 0; i < data.length; i++) {
@@ -337,13 +335,17 @@ async function createExercise() {
     editExercise = document.getElementById("addExerciseName").value;
     editExercisePR = document.getElementById("addExercisePR").value;
 
+    if (editExercisePR == "") {
+        editExercisePR = "0";
+    }
+
 
     // Clear form
     document.getElementById('addExerciseName').value='';
     document.getElementById('addExercisePR').value='';
     
 
-    accountDetails = {
+    exerciseDetails = {
         exercise_name : editExercise,
         exercise_pr : editExercisePR
     }
@@ -351,7 +353,7 @@ async function createExercise() {
     response = await fetch("http://localhost:8000/api/v1/exercises", {
         method: "POST",
         credentials: "include",
-        body: JSON.stringify(accountDetails),
+        body: JSON.stringify(exerciseDetails),
         headers: {
             "Content-type" : "application/json; charset=UTF-8"
         }
@@ -359,21 +361,23 @@ async function createExercise() {
     
     data = await response.json()
 
-    loadExercises();
+    // Wait a second before loading exercises
+    new Promise(resolve => setTimeout(resolve, 1500)).then(() => {loadExercises();});
+
 
 }
 
 // Delete exercises
 async function deleteExercise(exerciseID) {
 
-    accountDetails = {
+    exerciseDetails = {
         exercise_id : exerciseID
     }
 
     response = await fetch("http://localhost:8000/api/v1/exercises", {
         method: "DELETE",
         credentials: "include",
-        body: JSON.stringify(accountDetails),
+        body: JSON.stringify(exerciseDetails),
         headers: {
             "Content-type" : "application/json; charset=UTF-8"
         }
@@ -385,3 +389,413 @@ async function deleteExercise(exerciseID) {
     loadExercises();
 }
 
+
+//---------------------------------------Workouts---------------------------------------//
+async function checkWorkoutAuth() {
+    response = await fetch("http://localhost:8000/api/v1/check", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+
+    // // Change page depending on auth
+    var workout = document.getElementById('workoutPage');
+    // var notExercise = document.getElementById('exerciseNotLoggedIn');
+
+    console.log("check function called");
+
+    if (data.auth == true) {
+        workout.style.display = "block";
+        loadWorkouts();
+    }
+    else {
+        workout.style.display = "none";
+        window.location.replace("/account");
+    }
+}
+
+
+// Get workouts 
+async function loadWorkouts() {
+    response = await fetch("http://localhost:8000/api/v1/workouts", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+
+    var node = document.getElementById('workoutsTable');
+    
+    var workoutHTML = "";
+
+
+    for (var workoutIndex = 0; workoutIndex < data.length; workoutIndex++) {
+        console.log(data[workoutIndex]);
+        workoutHTML = workoutHTML + ` <tr class="align-middle">
+        <td>
+            <div class="d-flex align-items-center">
+                <div>
+                    <div class="h6 mb-0 lh-1">
+                        ${data[workoutIndex].name}
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+        <table>`;
+
+        var exerciseHTML = "";
+        for(var exerciseIndex = 0; exerciseIndex < data[workoutIndex].exercises.length; exerciseIndex++) {
+            exerciseHTML = exerciseHTML + `
+            <tr>
+                <td>${data[workoutIndex].exercises[exerciseIndex].name}
+                <table>    
+            `
+            
+            
+            exerciseHTML = exerciseHTML + `<tr>
+                <td style="text-indent: 50px;">${data[workoutIndex].exercises[exerciseIndex].sets.length} set(s)</td>
+            </tr>`
+
+
+            exerciseHTML = exerciseHTML +
+            `</table>
+                </td>
+                
+            </tr>
+            `;
+
+
+        }
+
+        workoutHTML = workoutHTML + exerciseHTML;
+
+
+        workoutHTML = workoutHTML + " </table>";
+        workoutHTML = workoutHTML + `<td>
+                                        <button class="btn btn-outline-primary" onclick="startWorkout(${data[workoutIndex].workout_id});"><i class="bi bi-play-fill"></i></button>
+                                    </td>`
+
+        workoutHTML = workoutHTML + `<td>
+                                        <button class="btn btn-outline-danger" onclick="deleteWorkout(${data[workoutIndex].workout_id});"><i class="bi bi-trash"></i></button>
+                                    </td>`
+    }
+
+    node.innerHTML = workoutHTML;  
+
+    console.log(node.innerHTML);
+    
+    
+}
+
+async function deleteWorkout(workoutID) {
+    workoutDetails = {
+        workout_id : workoutID
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/workouts", {
+        method: "DELETE",
+        credentials: "include",
+        body: JSON.stringify(workoutDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+
+    data = await response.json();
+    console.log(data);
+
+    // Wait a second before loading exercises
+    new Promise(resolve => setTimeout(resolve, 1500)).then(() => {loadWorkouts();});
+}
+
+
+async function createWorkout() {
+    newWorkout = document.getElementById("addWorkoutName").value;
+
+
+    // Clear form
+    document.getElementById('addWorkoutName').value='';
+    
+
+    workoutDetails = {
+        workout_name : newWorkout
+    }
+
+    response = await fetch("http://localhost:8000/api/v1/workouts", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(workoutDetails),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+    
+    data = await response.json()
+
+    // Wait a second before loading exercises
+    new Promise(resolve => setTimeout(resolve, 1000)).then(() => {loadWorkouts();});
+
+}
+
+async function startWorkout(workout) {
+
+    apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
+
+    response = await fetch(apiGet, {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+
+    var workoutPage = document.getElementById('workoutPage');
+    var startWorkoutPage = document.getElementById('startWorkoutPage');
+
+    workoutPage.style.display = "none";
+    startWorkoutPage.style.display = "block";
+
+    var node = document.getElementById('startWorkoutsTable');
+    
+    var workoutHTML = "";
+
+
+    
+    workoutHTML = workoutHTML + ` <tr class="align-middle">
+    <td>
+        <div class="d-flex align-items-center">
+            <div>
+                <div class="h6 mb-0 lh-1">
+                    ${data.name}
+                </div>
+            </div>
+        </div>
+    </td>
+    <td>
+    <table>`;
+
+    var exerciseHTML = "";
+    for(var exerciseIndex = 0; exerciseIndex < data.exercises.length; exerciseIndex++) {
+        exerciseHTML = exerciseHTML + `
+        <tr>
+            <td>${data.exercises[exerciseIndex].name} <button class="btn btn-outline-primary btn-sm" onclick="addSet(${data.workout_id}, ${exerciseIndex})">
+            <i class="bi bi-plus"></i></button> <button class="btn btn-outline-danger btn-sm" onclick="deleteSet(${data.workout_id}, ${exerciseIndex})"><i class="bi bi-dash-lg"></i></button>
+            <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash" onclick="deleteFromWorkout(${data.workout_id}, ${exerciseIndex});"></i></button>
+            <table>    
+        `
+        
+        
+        for(var setsIndex = 0; setsIndex < data.exercises[exerciseIndex].sets.length; setsIndex++) {
+                            var setsHTML = "";
+                            setsHTML = setsHTML + `<tr>
+                                                        <td>
+                                                            Set: ${data.exercises[exerciseIndex].sets[setsIndex][0]} <input id="Exercise${exerciseIndex}Set${setsIndex}" 
+                                                            class="form-control  form-control-sm" type="number" placeholder="Weight (kg)" value="${data.exercises[exerciseIndex].sets[setsIndex][1]}">
+                                                            <input id="RepExercise${exerciseIndex}RepSet${setsIndex}" class="form-control form-control-sm" type="number" 
+                                                            placeholder="Reps" value="${data.exercises[exerciseIndex].sets[setsIndex][2]}"></td>
+                                                        </td>
+
+                                                    </tr>`
+                            exerciseHTML = exerciseHTML + setsHTML;
+        }
+
+
+        exerciseHTML = exerciseHTML +
+        `</table>
+            </td>
+        </tr>`;
+
+
+    }
+
+    workoutHTML = workoutHTML + exerciseHTML;
+    
+
+
+    workoutHTML = workoutHTML + `</table>`;
+
+    node.innerHTML = workoutHTML;  
+    document.getElementById("finishWorkoutButton").onclick = function () {finishedWorkout(data);};
+    document.getElementById("addExerciseWorkoutButton").onclick = function () {loadExerciseWorkout(data);};
+    document.getElementById("saveChangesButton").onclick = function () {startWorkout(workout);};
+
+}
+
+async function addSet(workout, exercise) {
+    apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
+
+    response = await fetch(apiGet, {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+
+    for(var exerciseIndex = 0; exerciseIndex < data.exercises.length; exerciseIndex++) {
+        for(var setsIndex = 0; setsIndex < data.exercises[exerciseIndex].sets.length; setsIndex++) {
+            weight = document.getElementById(("Exercise" + [exerciseIndex] + "Set" + [setsIndex]).replaceAll(' ', '')) 
+            rep = document.getElementById(("RepExercise" + [exerciseIndex] + "RepSet" + [setsIndex]).replaceAll(' ', ''))
+            data.exercises[exerciseIndex].sets[setsIndex][1] = parseFloat(weight.value);
+            data.exercises[exerciseIndex].sets[setsIndex][2] = parseInt(rep.value);
+        }
+    }
+
+
+    data.exercises[exercise].sets[data.exercises[exercise].sets.length] = [data.exercises[exercise].sets.length + 1, 0, 0];
+
+    updateWorkout(data);
+}
+
+async function deleteSet(workout, exercise) {
+    apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
+
+    response = await fetch(apiGet, {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+
+    for(var exerciseIndex = 0; exerciseIndex < data.exercises.length; exerciseIndex++) {
+        for(var setsIndex = 0; setsIndex < data.exercises[exerciseIndex].sets.length; setsIndex++) {
+            weight = document.getElementById(("Exercise" + [exerciseIndex] + "Set" + [setsIndex]).replaceAll(' ', '')) 
+            rep = document.getElementById(("RepExercise" + [exerciseIndex] + "RepSet" + [setsIndex]).replaceAll(' ', ''))
+            data.exercises[exerciseIndex].sets[setsIndex][1] = parseFloat(weight.value);
+            data.exercises[exerciseIndex].sets[setsIndex][2] = parseInt(rep.value);
+        }
+    }
+
+    data.exercises[exercise].sets.pop()
+    console.log(data)
+
+    updateWorkout(data);
+}
+
+async function loadExerciseWorkout(workout) {
+    response = await fetch("http://localhost:8000/api/v1/exercises", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+
+    var node = document.getElementById('addWorkoutTable');
+    
+    var htmlString = "";
+
+    for (var i = 0; i < data.length; i++) {
+        htmlString = htmlString + `<tr class="align-middle">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <div class="h6 mb-0 lh-1">
+                                                        ${data[i].name}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            ${data[i].personal_record}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-outline-primary" onclick="addExerciseToWorkout(${workout.workout_id}, ${i});"><i class="bi bi-plus"></i></button>
+                                        </td>
+                                    </tr>`;
+    }
+    node.innerHTML = htmlString;
+}
+
+async function addExerciseToWorkout(workout, exercise) {
+    exerciseResponse = await fetch("http://localhost:8000/api/v1/exercises", {
+        method: "GET",
+        credentials: "include",
+    });
+
+    exerciseData = await exerciseResponse.json()
+
+    apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
+
+    workoutResponse = await fetch(apiGet, {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    workoutData = await workoutResponse.json()
+
+    workoutData.exercises[workoutData.exercises.length] = exerciseData[exercise]
+    workoutData.exercises[workoutData.exercises.length - 1].sets = [[1, 0, 0]]
+    
+    response = await fetch("http://localhost:8000/api/v1/workouts/update", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(workoutData),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+
+
+}
+
+
+
+async function updateWorkout(data) {
+
+    response = await fetch("http://localhost:8000/api/v1/workouts/update", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+    
+    console.log(data);
+
+    startWorkout(data.workout_id);
+
+}
+
+async function deleteFromWorkout(workout, exerciseID) {
+    apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
+
+    workoutResponse = await fetch(apiGet, {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    workoutData = await workoutResponse.json()
+
+    
+    workoutData.exercises.splice(exerciseID, 1);
+    
+    updateWorkout(workoutData);
+
+}
+
+
+async function finishedWorkout(data) {
+
+    for(var exerciseIndex = 0; exerciseIndex < data.exercises.length; exerciseIndex++) {
+        for(var setsIndex = 0; setsIndex < data.exercises[exerciseIndex].sets.length; setsIndex++) {
+            weight = document.getElementById(("Exercise" + [exerciseIndex] + "Set" + [setsIndex]).replaceAll(' ', '')) 
+            rep = document.getElementById(("RepExercise" + [exerciseIndex] + "RepSet" + [setsIndex]).replaceAll(' ', ''))
+            data.exercises[exerciseIndex].sets[setsIndex][1] = parseFloat(weight.value);
+            data.exercises[exerciseIndex].sets[setsIndex][2] = parseInt(rep.value);
+        }
+    }
+
+    data.status = true;
+    
+    response = await fetch("http://localhost:8000/api/v1/workouts/update", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+
+    window.location.replace("/workout");
+}
