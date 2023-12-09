@@ -618,6 +618,9 @@ async function startWorkout(workout) {
 
     node.innerHTML = workoutHTML;  
     document.getElementById("finishWorkoutButton").onclick = function () {finishedWorkout(data);};
+    document.getElementById("addExerciseWorkoutButton").onclick = function () {loadExerciseWorkout(data);};
+    document.getElementById("saveChangesButton").onclick = function () {startWorkout(workout);};
+
 }
 
 async function addSet(workout, exercise) {
@@ -648,52 +651,6 @@ async function addSet(workout, exercise) {
     updateWorkout(data);
 }
 
-async function loadExerciseWorkout() {
-    response = await fetch("http://localhost:8000/api/v1/exercises", {
-        method: "GET",
-        credentials: "include",
-    });
-    
-    data = await response.json()
-    console.log(data)
-
-    var node = document.getElementById('addWorkoutTable');
-    
-    var htmlString = "";
-
-    for (var i = 0; i < data.length; i++) {
-        htmlString = htmlString + `<tr class="align-middle">
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <div class="h6 mb-0 lh-1">
-                                                        ${data[i].name}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            ${data[i].personal_record}
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-outline-primary" onclick="addExerciseToWorkout(${data[i]});"><i class="bi bi-plus"></i></button>
-                                        </td>
-                                    </tr>`;
-    }
-    node.innerHTML = htmlString;
-
-
-}
-
-async function addExerciseToWorkout(exercise) {
-    response = await fetch("http://localhost:8000/api/v1/exercises", {
-        method: "GET",
-        credentials: "include",
-    });
-
-
-}
-
 async function deleteSet(workout, exercise) {
     apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
 
@@ -721,6 +678,78 @@ async function deleteSet(workout, exercise) {
 
     updateWorkout(data);
 }
+
+async function loadExerciseWorkout(workout) {
+    response = await fetch("http://localhost:8000/api/v1/exercises", {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    data = await response.json()
+
+    var node = document.getElementById('addWorkoutTable');
+    
+    var htmlString = "";
+
+    for (var i = 0; i < data.length; i++) {
+        htmlString = htmlString + `<tr class="align-middle">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <div class="h6 mb-0 lh-1">
+                                                        ${data[i].name}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            ${data[i].personal_record}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-outline-primary" onclick="addExerciseToWorkout(${workout.workout_id}, ${i});"><i class="bi bi-plus"></i></button>
+                                        </td>
+                                    </tr>`;
+    }
+    node.innerHTML = htmlString;
+
+
+}
+
+async function addExerciseToWorkout(workout, exercise) {
+    exerciseResponse = await fetch("http://localhost:8000/api/v1/exercises", {
+        method: "GET",
+        credentials: "include",
+    });
+
+    exerciseData = await exerciseResponse.json()
+
+    apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
+
+    workoutResponse = await fetch(apiGet, {
+        method: "GET",
+        credentials: "include",
+    });
+    
+    workoutData = await workoutResponse.json()
+    console.log(workoutData)
+    console.log(exerciseData)
+
+    workoutData.exercises[workoutData.exercises.length] = exerciseData[exercise]
+    workoutData.exercises[workoutData.exercises.length - 1].sets = [[1, 0, 0]]
+    
+    response = await fetch("http://localhost:8000/api/v1/workouts/update", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(workoutData),
+        headers: {
+            "Content-type" : "application/json; charset=UTF-8"
+        }
+    });
+
+
+}
+
+
 
 async function updateWorkout(data) {
 
