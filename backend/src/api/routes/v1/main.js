@@ -85,6 +85,10 @@ main_router
     .route('/workouts')
     .get(AccountsController.check, WorkoutController.getWorkouts);
 
+    main_router
+    .route('/workouts/:id')
+    .get(AccountsController.check, WorkoutController.getWorkout);
+
 // Workout Create //
 main_router
     .route('/workouts')
@@ -96,3 +100,6 @@ main_router
     .delete(AccountsController.check, WorkoutController.deleteWorkout);
 
 // Workout Update
+main_router
+    .route('/workouts/update')
+    .post(AccountsController.check, WorkoutController.updateWorkout);
