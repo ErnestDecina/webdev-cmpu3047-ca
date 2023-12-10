@@ -81,8 +81,8 @@ export class mySQLDatabse {
 
 
     async deleteUser(uid) {
-        const data = this.getExercisesByUserID(uid);
-        const exercises = data[0]
+        const data = await this.getExercisesByUserID(uid);
+        const exercises = await data[0]
         
         // Delete All Sets and Exercises
         for(const exercise of exercises) {
