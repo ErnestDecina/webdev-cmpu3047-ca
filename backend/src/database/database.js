@@ -81,6 +81,32 @@ export class mySQLDatabse {
 
 
     async deleteUser(uid) {
+        const data = this.getExercisesByUserID(uid);
+        const exercises = data[0]
+        
+        // Delete All Sets and Exercises
+        for(const exercise of exercises) {
+            const q = `DELETE FROM sets WHERE fk_exercise_id = ?;`;
+            await this.mysql_database_connection.promise().query(
+                q,
+                exercise.exercise_id
+            );
+
+            const p = `DELETE FROM exercise WHERE exercise_id = ?;`;
+            await this.mysql_database_connection.promise().query(
+                p,
+                exercise.exercise_id
+            );
+        }
+
+        // Delete Workouts
+        const c = `DELETE FROM workout WHERE fk_user_id = ?;`;
+        await this.mysql_database_connection.promise().query(
+            c,
+           uid
+        );
+
+
         const query_string = `DELETE FROM user WHERE user_id = ?;`;
         const results = await this.mysql_database_connection.promise().query(
             query_string, 
