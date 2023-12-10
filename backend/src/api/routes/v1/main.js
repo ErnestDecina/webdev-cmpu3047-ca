@@ -7,20 +7,6 @@ import WorkoutController from '../../controllers/WorkoutController.js';
 
 export const main_router = Router();
 
-// TESTING //
-main_router
-    .route('/test')
-    .get(ExampleController.example);
-
-main_router
-    .route('/test/login')
-    .post(ExampleController.exampleLogin);
-
-main_router
-    .route('/test/session')
-    .get(ExampleController.exmapleSessionCheck);
-// TESTING //
-
 
 // Login //
 main_router
