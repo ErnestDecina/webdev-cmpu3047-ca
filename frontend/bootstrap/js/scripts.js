@@ -27,7 +27,9 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 
-//---------------------------------------Accounts---------------------------------------//
+//
+//  ACCOUNTS
+//
 
 
 // Get user account details
@@ -268,9 +270,17 @@ function togglePass() {
     }
 }
 
+//
+//  END ACCOUNTS
+//
 
-//---------------------------------------Exercises---------------------------------------//
 
+
+//
+//  EXERCISE
+//
+
+// Check if the user is authenticated
 async function checkExerciseAuth() {
     response = await fetch("http://localhost:8000/api/v1/check", {
         method: "GET",
@@ -279,7 +289,7 @@ async function checkExerciseAuth() {
     
     data = await response.json()
 
-    // Change page depending on auth
+    // Change which page to display depending on auth
     var exercise = document.getElementById('exercisePage');
 
     if (data.auth == true) {
@@ -308,6 +318,7 @@ async function loadExercises() {
     
     var htmlString = "";
 
+    //Cycle through each of the user's exercise and display on page
     for (var i = 0; i < data.length; i++) {
         htmlString = htmlString + `<tr class="align-middle">
                                         <td>
@@ -340,7 +351,7 @@ async function createExercise() {
     }
 
 
-    // Clear form
+    // Clear form input
     document.getElementById('addExerciseName').value='';
     document.getElementById('addExercisePR').value='';
     
@@ -350,6 +361,7 @@ async function createExercise() {
         exercise_pr : editExercisePR
     }
 
+    // Post new exercise to the database
     response = await fetch("http://localhost:8000/api/v1/exercises", {
         method: "POST",
         credentials: "include",
@@ -389,8 +401,17 @@ async function deleteExercise(exerciseID) {
     loadExercises();
 }
 
+//
+//  END EXERCISE
+//
 
-//---------------------------------------Workouts---------------------------------------//
+
+//
+// WORKOUTS
+//
+
+
+// Check if the user is authenticated
 async function checkWorkoutAuth() {
     response = await fetch("http://localhost:8000/api/v1/check", {
         method: "GET",
@@ -399,9 +420,8 @@ async function checkWorkoutAuth() {
     
     data = await response.json()
 
-    // // Change page depending on auth
+    // // Change workout page depending on auth
     var workout = document.getElementById('workoutPage');
-    // var notExercise = document.getElementById('exerciseNotLoggedIn');
 
     console.log("check function called");
 
@@ -416,7 +436,7 @@ async function checkWorkoutAuth() {
 }
 
 
-// Get workouts 
+// Get workouts and display on screen
 async function loadWorkouts() {
     response = await fetch("http://localhost:8000/api/v1/workouts", {
         method: "GET",
@@ -429,7 +449,7 @@ async function loadWorkouts() {
     
     var workoutHTML = "";
 
-
+    // Go through each workout, exercise and set and display on page
     for (var workoutIndex = 0; workoutIndex < data.length; workoutIndex++) {
         console.log(data[workoutIndex]);
         workoutHTML = workoutHTML + ` <tr class="align-middle">
@@ -489,6 +509,7 @@ async function loadWorkouts() {
     
 }
 
+// Delete workout from database
 async function deleteWorkout(workoutID) {
     workoutDetails = {
         workout_id : workoutID
@@ -510,12 +531,12 @@ async function deleteWorkout(workoutID) {
     new Promise(resolve => setTimeout(resolve, 1500)).then(() => {loadWorkouts();});
 }
 
-
+// Create workout and post to database
 async function createWorkout() {
     newWorkout = document.getElementById("addWorkoutName").value;
 
 
-    // Clear form
+    // Clear form input
     document.getElementById('addWorkoutName').value='';
     
 
@@ -539,6 +560,7 @@ async function createWorkout() {
 
 }
 
+// Start a workout
 async function startWorkout(workout) {
 
     apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
@@ -561,7 +583,7 @@ async function startWorkout(workout) {
     var workoutHTML = "";
 
 
-    
+    // Load a new page with the started workout
     workoutHTML = workoutHTML + ` <tr class="align-middle">
     <td>
         <div class="d-flex align-items-center">
@@ -616,12 +638,15 @@ async function startWorkout(workout) {
     workoutHTML = workoutHTML + `</table>`;
 
     node.innerHTML = workoutHTML;  
+
+    // Change button's onclick to the relevant workout
     document.getElementById("finishWorkoutButton").onclick = function () {finishedWorkout(data);};
     document.getElementById("addExerciseWorkoutButton").onclick = function () {loadExerciseWorkout(data);};
     document.getElementById("saveChangesButton").onclick = function () {startWorkout(workout);};
 
 }
 
+// Add a set to an exercise
 async function addSet(workout, exercise) {
     apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
 
@@ -641,12 +666,13 @@ async function addSet(workout, exercise) {
         }
     }
 
-
+    
     data.exercises[exercise].sets[data.exercises[exercise].sets.length] = [data.exercises[exercise].sets.length + 1, 0, 0];
 
     updateWorkout(data);
 }
 
+// Remove a set from an exercise
 async function deleteSet(workout, exercise) {
     apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
 
@@ -672,6 +698,7 @@ async function deleteSet(workout, exercise) {
     updateWorkout(data);
 }
 
+// Displaying the user's exercises when they want to add an exercise to the workout
 async function loadExerciseWorkout(workout) {
     response = await fetch("http://localhost:8000/api/v1/exercises", {
         method: "GET",
@@ -706,6 +733,7 @@ async function loadExerciseWorkout(workout) {
     node.innerHTML = htmlString;
 }
 
+// Adds the new exercise to the workout
 async function addExerciseToWorkout(workout, exercise) {
     exerciseResponse = await fetch("http://localhost:8000/api/v1/exercises", {
         method: "GET",
@@ -738,8 +766,7 @@ async function addExerciseToWorkout(workout, exercise) {
 
 }
 
-
-
+// Updates the workout after each change
 async function updateWorkout(data) {
 
     response = await fetch("http://localhost:8000/api/v1/workouts/update", {
@@ -757,6 +784,7 @@ async function updateWorkout(data) {
 
 }
 
+// Remove an exercise from a workout
 async function deleteFromWorkout(workout, exerciseID) {
     apiGet = "http://localhost:8000/api/v1/workouts/" + workout;
 
@@ -774,7 +802,7 @@ async function deleteFromWorkout(workout, exerciseID) {
 
 }
 
-
+// Gets the input of reps and weight done from the user and saves it to the database
 async function finishedWorkout(data) {
 
     for(var exerciseIndex = 0; exerciseIndex < data.exercises.length; exerciseIndex++) {
@@ -799,3 +827,7 @@ async function finishedWorkout(data) {
 
     window.location.replace("/workout");
 }
+
+//
+//  END WORKOUTS
+//
