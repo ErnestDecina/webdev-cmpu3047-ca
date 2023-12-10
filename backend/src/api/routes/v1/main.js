@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import ExampleController from '../../controllers/ExampleController.js';
 import AuthController from '../../controllers/AuthController.js';
 import AccountsController from '../../controllers/AccountsController.js';
 import ExerciseController from '../../controllers/ExerciseController.js';
