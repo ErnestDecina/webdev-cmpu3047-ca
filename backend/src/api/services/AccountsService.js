@@ -101,6 +101,7 @@ class AccountsService {
 
             const user = await mysql_database.queryUserDetails(user_uid);
 
+            // Using Turnary Operator to assign the value of new_(table colmn)
             const new_first_name = (request.body.first_name) ?  request.body.first_name : user.first_name;
             const new_last_name = (request.body.last_name) ? request.body.last_name : user.last_name;
             const new_username = (request.body.username) ? request.body.username : user.username;
