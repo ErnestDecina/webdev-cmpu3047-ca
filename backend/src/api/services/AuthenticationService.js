@@ -98,8 +98,11 @@ class AuthenticationService {
     async validateUser(
         request
     ) {
+
+        // Check if the users session is not valid and not contained on our server
         if(!request.session.username || !request.session.uid || !request.session.email) return false;
 
+        // User has a valid session
         return true;
     } // End valideUser
     
