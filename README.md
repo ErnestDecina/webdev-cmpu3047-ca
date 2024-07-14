@@ -1,7 +1,4 @@
 # webdev-cmpu3047-ca
-## Access Website on the internet
-https://www.idkfitness.com/
-
 
 ## NPM Deployment
 Change Directory to backend
